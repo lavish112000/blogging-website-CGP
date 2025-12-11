@@ -38,17 +38,19 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
     }
   }
 
+  const authorName = typeof post.author === 'string' ? post.author : post.author?.name || 'Vibrant Insights'
+
   return {
     title: `${post.title} | Vibrant Insights`,
     description: post.description,
     keywords: post.tags?.join(', '),
-    authors: [{ name: post.author?.name || 'Vibrant Insights' }],
+    authors: [{ name: authorName }],
     openGraph: {
       title: post.title,
       description: post.description,
       type: 'article',
       publishedTime: post.date,
-      authors: [post.author?.name || 'Vibrant Insights'],
+      authors: [authorName],
       images: post.image ? [{ url: post.image }] : [],
     },
     twitter: {
@@ -69,13 +71,18 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   }
 
   const categoryInfo = getCategoryInfo(category)
+  
+  if (!categoryInfo) {
+    notFound()
+  }
+
   const relatedPosts = await getRelatedPosts(post, 3)
   const currentUrl = `https://vibrantinsights.com/${category}/${slug}`
 
   return (
     <article className="min-h-screen">
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-muted/50 to-muted/30 border-b border-border">
+      <div className="relative bg-linear-to-br from-muted/50 to-muted/30 border-b border-border">
         <div className="container mx-auto px-4 py-12 max-w-4xl">
           <Breadcrumbs category={category} title={post.title} />
           
@@ -83,11 +90,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             {/* Category Badge */}
             <div>
               <span
-                className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium"
-                style={{
-                  background: categoryInfo.gradient,
-                  color: 'white',
-                }}
+                className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium text-white bg-linear-to-r ${categoryInfo.gradient}`}
               >
                 {categoryInfo.name}
               </span>
@@ -166,7 +169,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
               </div>
 
               {/* Author Bio */}
-              {post.author && (
+              {post.author && typeof post.author !== 'string' && (
                 <div className="py-8">
                   <AuthorBio author={post.author} />
                 </div>
