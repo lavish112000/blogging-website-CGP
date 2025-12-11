@@ -11,6 +11,10 @@ interface BreadcrumbsProps {
 export function Breadcrumbs({ category, title }: BreadcrumbsProps) {
   const categoryInfo = getCategoryInfo(category)
 
+  if (!categoryInfo) {
+    return null
+  }
+
   return (
     <nav className="flex items-center space-x-2 text-sm text-muted-foreground mb-6">
       <Link
