@@ -27,6 +27,34 @@
   ::selection {
     background-color: theme('colors.primary / 0.2');
   }
+  
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1280px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .floating-lines-container {
+    height: 600px;
+    width: 100%;
+  }
 }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
