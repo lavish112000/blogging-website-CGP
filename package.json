@@ -9,11 +9,14 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@react-three/fiber": "^9.4.2",
     "@types/markdown-it": "^14.1.2",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "diff": "^8.0.2",
     "framer-motion": "^12.23.25",
     "gray-matter": "^4.0.3",
+    "gsap": "^3.14.1",
     "lucide-react": "^0.556.0",
     "markdown-it": "^14.1.0",
     "markdown-it-anchor": "^9.2.0",
@@ -33,12 +36,15 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/three": "^0.182.0",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.0.8",
+    "shadcn": "^3.5.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
