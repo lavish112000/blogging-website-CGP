@@ -1,8 +1,15 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
+import MarkdownIt from 'markdown-it'
 import { Post, PostFrontmatter, Category } from './types'
 import { calculateReadingTime } from './utils'
+
+const md = new MarkdownIt({
+  html: true,
+  linkify: true,
+  typographer: true,
+})
 
 const contentDirectory = path.join(process.cwd(), 'content')
 
@@ -43,12 +50,13 @@ export async function getPostBySlug(slug: string, category: Category): Promise<P
     
     const frontmatter = data as PostFrontmatter
     const readTime = calculateReadingTime(content)
+    const htmlContent = md.render(content)
 
     return {
       slug,
       title: frontmatter.title,
       description: frontmatter.description,
-      content,
+      content: htmlContent,
       date: frontmatter.date,
       category: frontmatter.category || category,
       tags: frontmatter.tags || [],
