@@ -1,6 +1,6 @@
-# Vibrant Insights — Articles Inventory
+# Tech-Knowlogia — Articles Inventory
 
-**Project:** Vibrant Insights Blogging Platform  
+**Project:** Tech-Knowlogia Blogging Platform  
 **Generated:** December 9, 2025  
 **Total Articles:** 5 Pillar Articles  
 **Total Word Count:** 36,200+ words
@@ -549,5 +549,5 @@ public/images/
 
 ---
 
-*Vibrant Insights — Delivering professional, research-backed content across technology, lifestyle, design, and business domains.*
+*Tech-Knowlogia — Delivering professional, research-backed content across technology, lifestyle, design, and business domains.*
 
