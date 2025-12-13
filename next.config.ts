@@ -4,10 +4,6 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   serverExternalPackages: [],
-  // Dev server configuration
-  devIndicators: {
-    buildActivityPosition: 'bottom-right',
-  },
   // Image configuration
   images: {
     dangerouslyAllowSVG: true,
