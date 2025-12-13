@@ -13,10 +13,10 @@ export function Footer() {
           <div className="md:col-span-1">
             <Link href="/" className="inline-flex items-center space-x-2 group">
               <div className="w-10 h-10 rounded-lg gradient-primary flex items-center justify-center">
-                <span className="text-white font-bold text-xl">V</span>
+                <span className="text-white font-bold text-xl">T</span>
               </div>
               <span className="font-bold text-xl gradient-text-primary">
-                Vibrant Insights
+                Tech-Knowlogia
               </span>
             </Link>
             <p className="mt-4 text-sm text-muted-foreground">
@@ -150,7 +150,7 @@ export function Footer() {
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800">
           <div className="flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
             <p className="text-sm text-muted-foreground flex items-center">
-              © {currentYear} Vibrant Insights. Made with{' '}
+              © {currentYear} Tech-Knowlogia. Made with{' '}
               <Heart className="w-4 h-4 mx-1 text-red-500 fill-red-500" /> for knowledge seekers.
             </p>
             <div className="flex items-center space-x-6">
