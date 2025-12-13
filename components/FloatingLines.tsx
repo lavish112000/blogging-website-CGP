@@ -244,7 +244,7 @@ interface FloatingLinesProps {
   mouseDamping?: number;
   parallax?: boolean;
   parallaxStrength?: number;
-  mixBlendMode?: string;
+  mixBlendMode?: React.CSSProperties['mixBlendMode'];
 }
 
 export default function FloatingLines({
@@ -262,7 +262,7 @@ export default function FloatingLines({
   mouseDamping = 0.05,
   parallax = true,
   parallaxStrength = 0.2,
-  mixBlendMode = 'screen'
+  mixBlendMode = 'screen',
 }: FloatingLinesProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const targetMouseRef = useRef(new Vector2(-1000, -1000));
@@ -493,7 +493,7 @@ export default function FloatingLines({
       ref={containerRef}
       className="w-full h-full relative overflow-hidden floating-lines-container"
       style={{
-        mixBlendMode: mixBlendMode
+        mixBlendMode: mixBlendMode as React.CSSProperties['mixBlendMode']
       }}
     />
   );
