@@ -60,7 +60,7 @@ export async function getPostBySlug(slug: string, category: Category): Promise<P
       date: frontmatter.date,
       category: frontmatter.category || category,
       tags: frontmatter.tags || [],
-      author: frontmatter.author || 'Vibrant Insights Team',
+      author: frontmatter.author || 'Tech-Knowlogia Team',
       readTime,
       featured: frontmatter.featured || false,
       image: frontmatter.image,

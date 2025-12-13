@@ -1,5 +1,5 @@
 /**
- * TypeScript Types for Vibrant Insights Blog
+ * TypeScript Types for Tech-Knowlogia Blog
  */
 
 export type Category = 'blog' | 'lifestyle' | 'design' | 'technology' | 'business'
