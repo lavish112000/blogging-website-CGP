@@ -1,8 +1,12 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Terms & Conditions | Blogging Website',
-  description: 'Read our terms and conditions.',
+  title: 'Terms & Conditions | Vibrant Insights',
+  description: 'Review the Terms and Conditions for using Vibrant Insights. Understand your rights and responsibilities as a user.',
+  robots: {
+    index: false,
+    follow: true,
+  },
 }
 
 export default function TermsPage() {

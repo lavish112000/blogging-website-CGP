@@ -1,8 +1,14 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Contact Us | Blogging Website',
-  description: 'Get in touch with us.',
+  title: 'Contact Us | Vibrant Insights',
+  description: 'Get in touch with the Vibrant Insights team. We love to hear from our readers, potential collaborators, and partners.',
+  keywords: ['contact us', 'support', 'feedback', 'collaboration', 'inquiries'],
+  openGraph: {
+    title: 'Contact Us | Vibrant Insights',
+    description: 'Get in touch with us. We are here to help and collaborate.',
+    url: 'https://vibrantinsights.com/contact',
+  },
 }
 
 export default function ContactPage() {

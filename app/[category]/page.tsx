@@ -31,10 +31,16 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
   return {
     title: `${categoryInfo.name} Articles | Vibrant Insights`,
-    description: categoryInfo.description,
+    description: `Explore our collection of articles on ${categoryInfo.name}. ${categoryInfo.description}`,
+    keywords: [categoryInfo.name, `${categoryInfo.name} tutorials`, `${categoryInfo.name} guides`, 'Vibrant Insights'],
     openGraph: {
       title: `${categoryInfo.name} Articles | Vibrant Insights`,
       description: categoryInfo.description,
+      url: `https://vibrantinsights.com/${category}`,
+      type: 'website',
+    },
+    alternates: {
+      canonical: `https://vibrantinsights.com/${category}`,
     },
   }
 }

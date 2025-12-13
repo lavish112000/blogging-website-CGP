@@ -1,8 +1,14 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Newsletter | Blogging Website',
-  description: 'Subscribe to our newsletter.',
+  title: 'Newsletter Subscription | Vibrant Insights',
+  description: 'Subscribe to the Vibrant Insights newsletter. Get the latest articles, tech trends, and exclusive content delivered to your inbox.',
+  keywords: ['newsletter', 'subscribe', 'tech updates', 'weekly digest', 'email subscription'],
+  openGraph: {
+    title: 'Subscribe to Our Newsletter | Vibrant Insights',
+    description: 'Stay updated with the latest in tech and design. Subscribe now.',
+    url: 'https://vibrantinsights.com/newsletter',
+  },
 }
 
 export default function NewsletterPage() {

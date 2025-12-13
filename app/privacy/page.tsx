@@ -1,8 +1,12 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy | Blogging Website',
-  description: 'Read our privacy policy.',
+  title: 'Privacy Policy | Vibrant Insights',
+  description: 'Read the Privacy Policy of Vibrant Insights. We value your privacy and are committed to protecting your personal data.',
+  robots: {
+    index: false,
+    follow: true,
+  },
 }
 
 export default function PrivacyPage() {

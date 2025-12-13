@@ -43,21 +43,26 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
   return {
     title: `${post.title} | Vibrant Insights`,
     description: post.description,
-    keywords: post.tags?.join(', '),
+    keywords: post.tags ? [...post.tags, category, 'Vibrant Insights'] : [category, 'Vibrant Insights'],
     authors: [{ name: authorName }],
     openGraph: {
       title: post.title,
       description: post.description,
       type: 'article',
+      url: `https://vibrantinsights.com/${category}/${slug}`,
       publishedTime: post.date,
       authors: [authorName],
       images: post.image ? [{ url: post.image }] : [],
+      tags: post.tags,
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.description,
       images: post.image ? [post.image] : [],
+    },
+    alternates: {
+      canonical: `https://vibrantinsights.com/${category}/${slug}`,
     },
   }
 }

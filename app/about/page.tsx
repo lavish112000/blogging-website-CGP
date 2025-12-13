@@ -2,8 +2,14 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 
 export const metadata: Metadata = {
-  title: 'About Us | Lalit Choudhary',
-  description: 'Learn more about Lalit Choudhary, a Full Stack Web Developer.',
+  title: 'About Us | Vibrant Insights',
+  description: 'Meet the team behind Vibrant Insights. We are passionate developers and creators sharing knowledge on tech, design, and modern lifestyle.',
+  keywords: ['about us', 'team', 'mission', 'vision', 'Vibrant Insights team', 'tech bloggers'],
+  openGraph: {
+    title: 'About Us | Vibrant Insights',
+    description: 'Meet the team behind Vibrant Insights. Passionate about tech, design, and lifestyle.',
+    url: 'https://vibrantinsights.com/about',
+  },
 }
 
 export default function AboutPage() {

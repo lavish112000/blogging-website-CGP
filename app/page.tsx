@@ -3,6 +3,15 @@ import { CategoryGrid } from '@/components/home/CategoryGrid'
 import { NewsletterSection } from '@/components/home/NewsletterSection'
 import { ArticleCard } from '@/components/article/ArticleCard'
 import { getAllPosts, getFeaturedPosts } from '@/lib/mdx'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Home | Vibrant Insights - Tech, Design & Lifestyle Blog',
+  description: 'Welcome to Vibrant Insights. Discover the latest articles on technology, web development, design trends, lifestyle tips, and business strategies.',
+  alternates: {
+    canonical: 'https://vibrantinsights.com',
+  },
+}
 
 export default async function Home() {
   // Get featured posts for homepage
