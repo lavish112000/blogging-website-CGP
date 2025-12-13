@@ -13,8 +13,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "Vibrant Insights - Premium Knowledge for Modern Professionals",
-    template: "%s | Vibrant Insights",
+    default: "Tech-Knowlogia - Premium Knowledge for Modern Professionals",
+    template: "%s | Tech-Knowlogia",
   },
   description: "Discover expert insights on web development, design, technology, lifestyle, and business. Your go-to source for research-backed articles and tutorials.",
   keywords: [
@@ -27,36 +27,36 @@ export const metadata: Metadata = {
     "programming tutorials",
     "career advice",
     "productivity hacks",
-    "Vibrant Insights"
+    "Tech-Knowlogia"
   ],
-  authors: [{ name: "Vibrant Insights Team", url: "https://vibrantinsights.com" }],
-  creator: "Vibrant Insights",
-  publisher: "Vibrant Insights",
-  metadataBase: new URL("https://vibrantinsights.com"),
+  authors: [{ name: "Tech-Knowlogia Team", url: "https://tech-knowlogia.com" }],
+  creator: "Tech-Knowlogia",
+  publisher: "Tech-Knowlogia",
+  metadataBase: new URL("https://tech-knowlogia.com"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://vibrantinsights.com",
-    title: "Vibrant Insights - Premium Knowledge for Modern Professionals",
+    url: "https://tech-knowlogia.com",
+    title: "Tech-Knowlogia - Premium Knowledge for Modern Professionals",
     description: "Expert insights on web development, design, technology, lifestyle, and business. Stay ahead with our comprehensive guides and articles.",
-    siteName: "Vibrant Insights",
+    siteName: "Tech-Knowlogia",
     images: [
       {
         url: "/og-image.jpg", // Ensure this image exists or update path
         width: 1200,
         height: 630,
-        alt: "Vibrant Insights - Premium Knowledge",
+        alt: "Tech-Knowlogia - Premium Knowledge",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Vibrant Insights",
+    title: "Tech-Knowlogia",
     description: "Premium knowledge for modern professionals. Web dev, design, tech, and more.",
-    creator: "@vibrantinsights",
+    creator: "@techknowlogia",
     images: ["/og-image.jpg"],
   },
   robots: {
@@ -111,8 +111,8 @@ export default function RootLayout({
       <body className={`${inter.variable} font-sans antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="dark"
+          enableSystem={false}
           disableTransitionOnChange
         >
           <div className="flex min-h-screen flex-col">
