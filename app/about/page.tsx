@@ -36,7 +36,7 @@ export default function AboutPage() {
             
             <div className="space-y-4 text-muted-foreground">
               <p>
-                Hello! I'm Lalit, a dedicated Full Stack Web Developer with a passion for creating 
+                Hello! I&apos;m Lalit, a dedicated Full Stack Web Developer with a passion for creating 
                 dynamic, responsive, and user-friendly web applications.
               </p>
               <p>
@@ -45,7 +45,7 @@ export default function AboutPage() {
                 continuous learning and a desire to innovate.
               </p>
               <p>
-                Whether it's crafting intuitive user interfaces or architecting robust backend 
+                Whether it&apos;s crafting intuitive user interfaces or architecting robust backend 
                 systems, I bring a holistic approach to web development.
               </p>
             </div>
