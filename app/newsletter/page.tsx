@@ -2,13 +2,13 @@ import type { Metadata } from 'next'
 import { NewsletterForm } from '@/components/newsletter/NewsletterForm'
 
 export const metadata: Metadata = {
-  title: 'Newsletter Subscription | Vibrant Insights',
-  description: 'Subscribe to the Vibrant Insights newsletter. Get the latest articles, tech trends, and exclusive content delivered to your inbox.',
+  title: 'Newsletter Subscription | Tech-Knowlogia',
+  description: 'Subscribe to the Tech-Knowlogia newsletter. Get the latest articles, tech trends, and exclusive content delivered to your inbox.',
   keywords: ['newsletter', 'subscribe', 'tech updates', 'weekly digest', 'email subscription'],
   openGraph: {
-    title: 'Subscribe to Our Newsletter | Vibrant Insights',
+    title: 'Subscribe to Our Newsletter | Tech-Knowlogia',
     description: 'Stay updated with the latest in tech and design. Subscribe now.',
-    url: 'https://vibrantinsights.com/newsletter',
+    url: 'https://tech-knowlogia.com/newsletter',
   },
 }
 

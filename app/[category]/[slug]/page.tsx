@@ -38,18 +38,18 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
     }
   }
 
-  const authorName = typeof post.author === 'string' ? post.author : post.author?.name || 'Vibrant Insights'
+  const authorName = typeof post.author === 'string' ? post.author : post.author?.name || 'Tech-Knowlogia'
 
   return {
-    title: `${post.title} | Vibrant Insights`,
+    title: `${post.title} | Tech-Knowlogia`,
     description: post.description,
-    keywords: post.tags ? [...post.tags, category, 'Vibrant Insights'] : [category, 'Vibrant Insights'],
+    keywords: post.tags ? [...post.tags, category, 'Tech-Knowlogia'] : [category, 'Tech-Knowlogia'],
     authors: [{ name: authorName }],
     openGraph: {
       title: post.title,
       description: post.description,
       type: 'article',
-      url: `https://vibrantinsights.com/${category}/${slug}`,
+      url: `https://tech-knowlogia.com/${category}/${slug}`,
       publishedTime: post.date,
       authors: [authorName],
       images: post.image ? [{ url: post.image }] : [],
@@ -62,7 +62,7 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
       images: post.image ? [post.image] : [],
     },
     alternates: {
-      canonical: `https://vibrantinsights.com/${category}/${slug}`,
+      canonical: `https://tech-knowlogia.com/${category}/${slug}`,
     },
   }
 }

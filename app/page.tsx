@@ -6,10 +6,10 @@ import { getAllPosts, getFeaturedPosts } from '@/lib/mdx'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Home | Vibrant Insights - Tech, Design & Lifestyle Blog',
-  description: 'Welcome to Vibrant Insights. Discover the latest articles on technology, web development, design trends, lifestyle tips, and business strategies.',
+  title: 'Home | Tech-Knowlogia - Tech, Design & Lifestyle Blog',
+  description: 'Welcome to Tech-Knowlogia. Discover the latest articles on technology, web development, design trends, lifestyle tips, and business strategies.',
   alternates: {
-    canonical: 'https://vibrantinsights.com',
+    canonical: 'https://tech-knowlogia.com',
   },
 }
 

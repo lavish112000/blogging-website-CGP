@@ -2,13 +2,13 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 
 export const metadata: Metadata = {
-  title: 'About Us | Vibrant Insights',
-  description: 'Meet the team behind Vibrant Insights. We are passionate developers and creators sharing knowledge on tech, design, and modern lifestyle.',
-  keywords: ['about us', 'team', 'mission', 'vision', 'Vibrant Insights team', 'tech bloggers'],
+  title: 'About Us | Tech-Knowlogia',
+  description: 'Meet the team behind Tech-Knowlogia. We are passionate developers and creators sharing knowledge on tech, design, and modern lifestyle.',
+  keywords: ['about us', 'team', 'mission', 'vision', 'Tech-Knowlogia team', 'tech bloggers'],
   openGraph: {
-    title: 'About Us | Vibrant Insights',
-    description: 'Meet the team behind Vibrant Insights. Passionate about tech, design, and lifestyle.',
-    url: 'https://vibrantinsights.com/about',
+    title: 'About Us | Tech-Knowlogia',
+    description: 'Meet the team behind Tech-Knowlogia. Passionate about tech, design, and lifestyle.',
+    url: 'https://tech-knowlogia.com/about',
   },
 }
 

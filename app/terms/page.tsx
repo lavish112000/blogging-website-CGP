@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Terms & Conditions | Vibrant Insights',
-  description: 'Review the Terms and Conditions for using Vibrant Insights. Understand your rights and responsibilities as a user.',
+  title: 'Terms & Conditions | Tech-Knowlogia',
+  description: 'Review the Terms and Conditions for using Tech-Knowlogia. Understand your rights and responsibilities as a user.',
   robots: {
     index: false,
     follow: true,

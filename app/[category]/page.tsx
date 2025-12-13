@@ -30,17 +30,17 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   }
 
   return {
-    title: `${categoryInfo.name} Articles | Vibrant Insights`,
+    title: `${categoryInfo.name} Articles | Tech-Knowlogia`,
     description: `Explore our collection of articles on ${categoryInfo.name}. ${categoryInfo.description}`,
-    keywords: [categoryInfo.name, `${categoryInfo.name} tutorials`, `${categoryInfo.name} guides`, 'Vibrant Insights'],
+    keywords: [categoryInfo.name, `${categoryInfo.name} tutorials`, `${categoryInfo.name} guides`, 'Tech-Knowlogia'],
     openGraph: {
-      title: `${categoryInfo.name} Articles | Vibrant Insights`,
+      title: `${categoryInfo.name} Articles | Tech-Knowlogia`,
       description: categoryInfo.description,
-      url: `https://vibrantinsights.com/${category}`,
+      url: `https://tech-knowlogia.com/${category}`,
       type: 'website',
     },
     alternates: {
-      canonical: `https://vibrantinsights.com/${category}`,
+      canonical: `https://tech-knowlogia.com/${category}`,
     },
   }
 }

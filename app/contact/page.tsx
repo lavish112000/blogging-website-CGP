@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Contact Us | Vibrant Insights',
-  description: 'Get in touch with the Vibrant Insights team. We love to hear from our readers, potential collaborators, and partners.',
+  title: 'Contact Us | Tech-Knowlogia',
+  description: 'Get in touch with the Tech-Knowlogia team. We love to hear from our readers, potential collaborators, and partners.',
   keywords: ['contact us', 'support', 'feedback', 'collaboration', 'inquiries'],
   openGraph: {
-    title: 'Contact Us | Vibrant Insights',
+    title: 'Contact Us | Tech-Knowlogia',
     description: 'Get in touch with us. We are here to help and collaborate.',
-    url: 'https://vibrantinsights.com/contact',
+    url: 'https://tech-knowlogia.com/contact',
   },
 }
 
