@@ -1,9 +1,38 @@
 'use client'
 
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, Send } from 'lucide-react'
+import { Mail, Send, Loader2, CheckCircle } from 'lucide-react'
 
 export function NewsletterSection() {
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [message, setMessage] = useState('')
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setStatus('loading')
+
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+
+      const data = await res.json()
+
+      if (!res.ok) throw new Error(data.error || 'Something went wrong')
+
+      setStatus('success')
+      setMessage('Thanks for subscribing!')
+      setEmail('')
+    } catch (error) {
+      setStatus('error')
+      setMessage('Failed to subscribe. Please try again.')
+    }
+  }
+
   return (
     <section className="py-16 md:py-24">
       <div className="container">
@@ -33,21 +62,39 @@ export function NewsletterSection() {
               No spam, unsubscribe anytime.
             </p>
 
-            <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
               <input
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email address"
-                className="flex-1 px-6 py-4 rounded-xl bg-white text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50 font-medium"
+                className="flex-1 px-6 py-4 rounded-xl bg-white text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-white/50 font-medium disabled:opacity-50"
                 required
+                disabled={status === 'loading' || status === 'success'}
               />
               <button
                 type="submit"
-                className="px-8 py-4 rounded-xl bg-gray-900 text-white font-semibold hover:bg-gray-800 transition-colors inline-flex items-center justify-center whitespace-nowrap"
+                disabled={status === 'loading' || status === 'success'}
+                className="px-8 py-4 rounded-xl bg-gray-900 text-white font-semibold hover:bg-gray-800 transition-colors inline-flex items-center justify-center whitespace-nowrap disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                Subscribe
-                <Send className="w-5 h-5 ml-2" />
+                {status === 'loading' ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : status === 'success' ? (
+                  <>
+                    Subscribed <CheckCircle className="w-5 h-5 ml-2" />
+                  </>
+                ) : (
+                  <>
+                    Subscribe <Send className="w-5 h-5 ml-2" />
+                  </>
+                )}
               </button>
             </form>
+            {message && (
+              <p className={`mt-4 text-sm font-medium ${status === 'error' ? 'text-red-200' : 'text-green-200'}`}>
+                {message}
+              </p>
+            )}
 
             <p className="text-sm text-white/70 mt-4">
               By subscribing, you agree to our Privacy Policy and consent to receive updates.
