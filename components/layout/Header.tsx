@@ -39,10 +39,10 @@ export function Header() {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
             <div className="w-10 h-10 rounded-lg gradient-primary flex items-center justify-center transform group-hover:scale-105 transition-transform">
-              <span className="text-white font-bold text-xl">V</span>
+              <span className="text-white font-bold text-xl">T</span>
             </div>
             <span className="font-bold text-xl md:text-2xl gradient-text-primary">
-              Vibrant Insights
+              Tech-Knowlogia
             </span>
           </Link>
 
