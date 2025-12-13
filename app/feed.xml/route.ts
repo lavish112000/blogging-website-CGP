@@ -1,6 +1,6 @@
 import { getAllPosts } from '@/lib/mdx'
 
-const SITE_URL = 'https://vibrantinsights.com'
+const SITE_URL = 'https://tech-knowlogia.com'
 
 export async function GET() {
   const posts = await getAllPosts()
@@ -8,7 +8,7 @@ export async function GET() {
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Vibrant Insights</title>
+    <title>Tech-Knowlogia</title>
     <link>${SITE_URL}</link>
     <description>Premium Knowledge for Modern Professionals</description>
     <language>en-us</language>
