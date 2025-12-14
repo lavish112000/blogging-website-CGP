@@ -52,6 +52,9 @@ export async function getPostBySlug(slug: string, category: Category): Promise<P
     const readTime = calculateReadingTime(content)
     const htmlContent = md.render(content)
 
+    const priority = typeof frontmatter.priority === 'number' ? frontmatter.priority : undefined
+    const breaking = frontmatter.breaking === true
+
     return {
       slug,
       title: frontmatter.title,
@@ -63,6 +66,9 @@ export async function getPostBySlug(slug: string, category: Category): Promise<P
       author: frontmatter.author || 'Tech-Knowlogia Team',
       readTime,
       featured: frontmatter.featured || false,
+      priority,
+      breaking,
+      summary: frontmatter.summary,
       image: frontmatter.image,
       seo: frontmatter.seo
     }
