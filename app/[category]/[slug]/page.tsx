@@ -40,6 +40,28 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
 
   const authorName = typeof post.author === 'string' ? post.author : post.author?.name || 'Tech-Knowlogia'
 
+  const baseUrl = 'https://tech-knowlogia.com'
+  const articleUrl = `${baseUrl}/${category}/${slug}`
+  const ogImageUrl = `${baseUrl}/api/og?title=${encodeURIComponent(post.title)}&category=${encodeURIComponent(category)}`
+
+  const ogImages = [] as { url: string; width?: number; height?: number; alt?: string }[]
+
+  if (post.image) {
+    ogImages.push({
+      url: post.image,
+      width: 1200,
+      height: 630,
+      alt: post.title,
+    })
+  }
+
+  ogImages.push({
+    url: ogImageUrl,
+    width: 1200,
+    height: 630,
+    alt: post.title,
+  })
+
   return {
     title: `${post.title} | Tech-Knowlogia`,
     description: post.description,
@@ -49,20 +71,20 @@ export async function generateMetadata({ params }: ArticlePageProps): Promise<Me
       title: post.title,
       description: post.description,
       type: 'article',
-      url: `https://tech-knowlogia.com/${category}/${slug}`,
+      url: articleUrl,
       publishedTime: post.date,
       authors: [authorName],
-      images: post.image ? [{ url: post.image }] : [],
+      images: ogImages,
       tags: post.tags,
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.description,
-      images: post.image ? [post.image] : [],
+      images: ogImages.map((image) => image.url),
     },
     alternates: {
-      canonical: `https://tech-knowlogia.com/${category}/${slug}`,
+      canonical: articleUrl,
     },
   }
 }
@@ -82,10 +104,56 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   }
 
   const relatedPosts = await getRelatedPosts(post, 3)
-  const currentUrl = `https://vibrantinsights.com/${category}/${slug}`
+  const baseUrl = 'https://tech-knowlogia.com'
+  const currentUrl = `${baseUrl}/${category}/${slug}`
+
+  const authorName =
+    typeof post.author === 'string' ? post.author : post.author?.name || 'Tech-Knowlogia'
+
+  const imageUrl = post.image || `${baseUrl}/api/og?title=${encodeURIComponent(post.title)}&category=${encodeURIComponent(category)}`
+
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': ['NewsArticle', 'Article'],
+    headline: post.title,
+    description: post.summary || post.description,
+    datePublished: post.date,
+    dateModified: post.date,
+    author: {
+      '@type': 'Person',
+      name: authorName,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Tech-Knowlogia',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/og-image.jpg`,
+      },
+    },
+    isAccessibleForFree: true,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': currentUrl,
+    },
+    image: [imageUrl],
+    articleSection: categoryInfo.name,
+    keywords: post.tags,
+    url: currentUrl,
+    inLanguage: 'en',
+    wordCount: typeof post.content === 'string' ? post.content.split(/\s+/).length : undefined,
+    dateCreated: post.date,
+    articleBody: undefined,
+  }
 
   return (
-    <article className="min-h-screen">
+    <>
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <article className="min-h-screen">
       {/* Hero Section */}
       <div className="relative bg-linear-to-br from-muted/50 to-muted/30 border-b border-border">
         <div className="container mx-auto px-4 py-12 max-w-4xl">
@@ -202,6 +270,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           </div>
         </div>
       )}
-    </article>
+      </article>
+    </>
   )
 }
