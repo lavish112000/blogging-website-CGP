@@ -2,6 +2,7 @@ import { HeroSection } from '@/components/home/HeroSection'
 import { CategoryGrid } from '@/components/home/CategoryGrid'
 import { NewsletterSection } from '@/components/home/NewsletterSection'
 import { ArticleCard } from '@/components/article/ArticleCard'
+import { TrendingPosts } from '@/components/home/TrendingPosts'
 import { getAllPosts, getFeaturedPosts } from '@/lib/mdx'
 import type { Metadata } from 'next'
 
@@ -22,6 +23,9 @@ export default async function Home() {
     <>
       {/* Hero Section */}
       <HeroSection />
+
+      {/* Trending Articles */}
+      <TrendingPosts />
 
       {/* Featured Articles Section */}
       {featuredPosts.length > 0 && (
