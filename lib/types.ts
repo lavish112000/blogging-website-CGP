@@ -25,6 +25,9 @@ export interface Post {
   author: Author | string
   readTime: number
   featured?: boolean
+   priority?: number
+   breaking?: boolean
+   summary?: string
   image?: string
   seo?: {
     title?: string
@@ -41,6 +44,9 @@ export interface PostFrontmatter {
   tags: string[]
   author: Author | string
   featured?: boolean
+   priority?: number
+   breaking?: boolean
+   summary?: string
   image?: string
   seo?: {
     title?: string
