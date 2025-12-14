@@ -29,6 +29,10 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     }
   }
 
+  const baseUrl = 'https://tech-knowlogia.com'
+  const categoryUrl = `${baseUrl}/${category}`
+  const ogImageUrl = `${baseUrl}/api/og?title=${encodeURIComponent(categoryInfo.name + ' Articles')}&category=${encodeURIComponent(category)}`
+
   return {
     title: `${categoryInfo.name} Articles | Tech-Knowlogia`,
     description: `Explore our collection of articles on ${categoryInfo.name}. ${categoryInfo.description}`,
@@ -36,11 +40,19 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     openGraph: {
       title: `${categoryInfo.name} Articles | Tech-Knowlogia`,
       description: categoryInfo.description,
-      url: `https://tech-knowlogia.com/${category}`,
+      url: categoryUrl,
       type: 'website',
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: `${categoryInfo.name} articles on Tech-Knowlogia`,
+        },
+      ],
     },
     alternates: {
-      canonical: `https://tech-knowlogia.com/${category}`,
+      canonical: categoryUrl,
     },
   }
 }
@@ -57,8 +69,33 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const posts = await getPostsByCategory(category as Category)
   const IconComponent = Icons[categoryInfo.icon as keyof typeof Icons] as React.ComponentType<{ className?: string }>
 
+  const baseUrl = 'https://tech-knowlogia.com'
+  const categoryUrl = `${baseUrl}/${category}`
+
+  const collectionSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `${categoryInfo.name} Articles | Tech-Knowlogia`,
+    description: categoryInfo.description,
+    url: categoryUrl,
+    about: categoryInfo.name,
+    inLanguage: 'en',
+    hasPart: posts.map((post) => ({
+      '@type': 'Article',
+      headline: post.title,
+      url: `${categoryUrl}/${post.slug}`,
+      datePublished: post.date,
+    })),
+  }
+
   return (
-    <main className="min-h-screen bg-background">
+    <>
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+      />
+      <main className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative py-20 md:py-28 overflow-hidden">
         {category === 'lifestyle' && (
@@ -115,5 +152,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         </div>
       </section>
     </main>
+    </>
   )
 }
