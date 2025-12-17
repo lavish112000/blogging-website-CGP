@@ -14,6 +14,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  verification: {
+    google: "xFq0YlVAHvByrrreIXbZo37PxtrJ5_j9Ypw3l9rzQsc",
+  },
   title: {
     default: "Tech-Knowlogia - Premium Knowledge for Modern Professionals",
     template: "%s | Tech-Knowlogia",
