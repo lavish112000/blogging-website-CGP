@@ -1,0 +1,13 @@
+# TECH-KNOWLOGIA ROBOTS.TXT
+# Public site indexing with admin routes blocked
+
+User-agent: *
+Allow: /
+Disallow: /admin-dashboard
+Disallow: /admin-dashboard/*
+Disallow: /admin
+Disallow: /api/
+
+# Sitemaps
+Sitemap: https://tech-knowlogia.com/sitemap.xml
+Sitemap: https://tech-knowlogia.com/news-sitemap.xml
