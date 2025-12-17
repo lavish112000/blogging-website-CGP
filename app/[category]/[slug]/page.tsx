@@ -9,6 +9,7 @@ import { TableOfContents } from '@/components/article/TableOfContents'
 import { AuthorBio } from '@/components/article/AuthorBio'
 import { ShareButtons } from '@/components/article/ShareButtons'
 import { RelatedPosts } from '@/components/article/RelatedPosts'
+import { ViewTracker } from '@/components/article/ViewTracker'
 import { Category } from '@/lib/types'
 import type { Metadata } from 'next'
 
@@ -148,6 +149,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <>
+      {/* View Tracker - Analytics */}
+      <ViewTracker slug={slug} category={category} />
+      
       <script
         type="application/ld+json"
         suppressHydrationWarning
