@@ -13,7 +13,7 @@ export default function AIDraftsPage() {
   const [topic, setTopic] = useState('')
   const [category, setCategory] = useState('technology')
   const [template, setTemplate] = useState('comprehensive-guide')
-  const [draft, setDraft] = useState<any>(null)
+  const [draft, setDraft] = useState<{ title: string; description: string; summary: string; body: string } | null>(null)
   const [loading, setLoading] = useState(false)
   const [copied, setCopied] = useState(false)
 
@@ -109,6 +109,7 @@ ${draft.body}
               value={category}
               onChange={(e) => setCategory(e.target.value)}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              aria-label="Select article category"
             >
               <option value="technology">Technology</option>
               <option value="business">Business</option>
@@ -125,6 +126,7 @@ ${draft.body}
               value={template}
               onChange={(e) => setTemplate(e.target.value)}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              aria-label="Select template style"
             >
               <option value="comprehensive-guide">Comprehensive Guide</option>
               <option value="breaking-news">Breaking News</option>
@@ -226,7 +228,7 @@ ${draft.body}
           ) : (
             <div className="flex flex-col items-center justify-center h-[400px] text-muted-foreground">
               <FileText className="w-16 h-16 mb-4 opacity-50" />
-              <p>Enter a topic and click "Generate Draft" to begin</p>
+              <p>Enter a topic and click &ldquo;Generate Draft&rdquo; to begin</p>
             </div>
           )}
         </div>
@@ -238,7 +240,7 @@ ${draft.body}
         <ol className="text-sm text-blue-800 dark:text-blue-200 space-y-2">
           <li><strong>1. Generate:</strong> Enter topic, select category/template, click generate</li>
           <li><strong>2. Review:</strong> Read the draft and check for accuracy</li>
-          <li><strong>3. Copy:</strong> Click "Copy Markdown" to get the full MDX format</li>
+          <li><strong>3. Copy:</strong> Click &ldquo;Copy Markdown&rdquo; to get the full MDX format</li>
           <li><strong>4. Paste:</strong> Go to CMS, create new article, paste content</li>
           <li><strong>5. Customize:</strong> Edit, add images, fact-check, personalize</li>
           <li><strong>6. Publish:</strong> Save as draft or publish directly</li>

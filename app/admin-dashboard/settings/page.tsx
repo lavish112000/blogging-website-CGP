@@ -23,7 +23,7 @@ export default function SettingsPage() {
 
   const [saving, setSaving] = useState(false)
 
-  const updateSetting = (key: string, value: any) => {
+  const updateSetting = (key: string, value: string | boolean) => {
     setSettings({ ...settings, [key]: value })
   }
 
@@ -79,6 +79,7 @@ export default function SettingsPage() {
               value={settings.siteName}
               onChange={(e) => updateSetting('siteName', e.target.value)}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              aria-label="Site name"
             />
           </div>
 
@@ -89,6 +90,7 @@ export default function SettingsPage() {
               value={settings.tagline}
               onChange={(e) => updateSetting('tagline', e.target.value)}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+              aria-label="Site tagline"
             />
           </div>
 
@@ -98,6 +100,7 @@ export default function SettingsPage() {
               type="text"
               value={settings.defaultAuthor}
               onChange={(e) => updateSetting('defaultAuthor', e.target.value)}
+              aria-label="Default author name"
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
@@ -136,6 +139,7 @@ export default function SettingsPage() {
                 checked={settings.discoverEnabled}
                 onChange={(e) => updateSetting('discoverEnabled', e.target.checked)}
                 className="sr-only peer"
+                aria-label="Toggle Google Discover optimization"
               />
               <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
             </label>
@@ -232,6 +236,7 @@ function ToggleFeature({
           checked={enabled}
           onChange={(e) => onChange(e.target.checked)}
           className="sr-only peer"
+          aria-label={`Toggle ${title}`}
         />
         <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
       </label>
