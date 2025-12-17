@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react'
+import { createContext, useContext, useEffect, useRef, useState, ReactNode } from 'react'
 import { NetlifyUser, isAdmin, isEditor, getUserRole } from '@/lib/auth'
 
 interface AuthContextType {
@@ -34,11 +34,34 @@ interface AuthProviderProps {
 export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<NetlifyUser | null>(null)
   const [loading, setLoading] = useState(true)
+  const initializedRef = useRef(false)
 
   useEffect(() => {
-    // Initialize Netlify Identity
-    if (typeof window !== 'undefined' && window.netlifyIdentity) {
-      // Listen for auth changes
+    let cancelled = false
+
+    const maybeOpenRecovery = () => {
+      const hash = window.location.hash || ''
+      const hasToken =
+        hash.includes('recovery_token=') ||
+        hash.includes('invite_token=') ||
+        hash.includes('confirmation_token=')
+
+      if (hasToken) {
+        try {
+          window.netlifyIdentity?.open()
+        } catch {
+          // Ignore - widget might still be initializing
+        }
+      }
+    }
+
+    const initIdentity = () => {
+      if (cancelled) return
+      if (initializedRef.current) return
+      if (!window.netlifyIdentity) return
+
+      initializedRef.current = true
+
       window.netlifyIdentity.on('login', (user?: NetlifyUser) => {
         setUser(user || null)
         setLoading(false)
@@ -52,14 +75,34 @@ export function AuthProvider({ children }: AuthProviderProps) {
       window.netlifyIdentity.on('init', (user?: NetlifyUser) => {
         setUser(user || null)
         setLoading(false)
+        maybeOpenRecovery()
       })
 
-      // Initialize the widget - this triggers the 'init' event which sets user state
       window.netlifyIdentity.init()
-    } else {
-      // Fallback if Netlify Identity script not loaded
-      setLoading(false)
+      // If the init event fired before we attached (rare), still try to open recovery.
+      setTimeout(maybeOpenRecovery, 0)
     }
+
+    if (typeof window !== 'undefined') {
+      // The identity script can load after hydration; retry briefly.
+      initIdentity()
+      const retryIntervals = [50, 150, 300, 600, 1200]
+      const timers = retryIntervals.map((ms) => setTimeout(initIdentity, ms))
+
+      // Don’t block the UI forever if Identity is disabled/missing.
+      const safetyTimer = setTimeout(() => {
+        if (!cancelled) setLoading(false)
+      }, 2000)
+
+      return () => {
+        cancelled = true
+        timers.forEach(clearTimeout)
+        clearTimeout(safetyTimer)
+      }
+    }
+
+    // Fallback (should not happen in client component)
+    setTimeout(() => setLoading(false), 0)
   }, [])
 
   const login = () => {
