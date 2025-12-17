@@ -15,6 +15,7 @@ Your Tech-Knowlogia CMS now has enterprise-level features:
 ## 1️⃣ ROLE-BASED PERMISSIONS (ADMIN / EDITOR)
 
 ### 🎯 What It Does
+
 - **Admins**: Can publish, delete, and manage all content
 - **Editors**: Can only create drafts and submit for review
 - **Approval workflow**: Editors cannot bypass admin approval
@@ -22,6 +23,7 @@ Your Tech-Knowlogia CMS now has enterprise-level features:
 ### 🔧 Configuration Added
 
 **File: [public/admin/config.yml](public/admin/config.yml)**
+
 ```yaml
 backend:
   name: git-gateway
@@ -51,6 +53,7 @@ backend:
 ## 2️⃣ LIVE PREVIEW MODE BEFORE PUBLISH
 
 ### 🎯 What It Does
+
 Shows exact article rendering in real-time as you type in the CMS editor.
 
 ### 🔧 Files Created
@@ -59,6 +62,7 @@ Shows exact article rendering in real-time as you type in the CMS editor.
 **[public/admin/index.html](public/admin/index.html)** - Updated to load preview
 
 ### 📋 Features Previewed
+
 - ✅ Breaking News badge
 - ✅ Featured badge
 - ✅ Title & description formatting
@@ -80,6 +84,7 @@ Shows exact article rendering in real-time as you type in the CMS editor.
 ## 3️⃣ ANALYTICS INSIDE ADMIN DASHBOARD
 
 ### 🎯 What It Does
+
 Tracks article views and shows performance metrics inside admin console.
 
 ### 🔧 Files Created
@@ -89,6 +94,7 @@ Tracks article views and shows performance metrics inside admin console.
 **[public/admin/analytics.js](public/admin/analytics.js)** - Admin widget
 
 ### 📋 What Gets Tracked
+
 - ✅ Total views per article
 - ✅ Top performing articles
 - ✅ Total site views
@@ -101,6 +107,7 @@ Tracks article views and shows performance metrics inside admin console.
    - Data stored in memory (resets on server restart)
 
 2. **View Analytics in Admin:**
+
    ```javascript
    // Open browser console in admin dashboard
    TechKnowlogiaAnalytics.load()
@@ -111,6 +118,7 @@ Tracks article views and shows performance metrics inside admin console.
    - `GET /api/views` - Get all analytics
 
 4. **Sample Response:**
+
    ```json
    {
      "views": {
@@ -125,6 +133,7 @@ Tracks article views and shows performance metrics inside admin console.
 ### 🔄 Upgrade to Production
 
 For persistent storage, replace in-memory store with:
+
 - **Vercel KV** (Redis)
 - **PostgreSQL**
 - **MongoDB**
@@ -135,6 +144,7 @@ For persistent storage, replace in-memory store with:
 ## 4️⃣ AI-ASSISTED DRAFT CREATION
 
 ### 🎯 What It Does
+
 Generates structured article drafts based on a topic prompt.
 
 ### 🔧 Files Created
@@ -142,6 +152,7 @@ Generates structured article drafts based on a topic prompt.
 **[app/api/ai-draft/route.ts](app/api/ai-draft/route.ts)** - Draft generation API
 
 ### 📋 Generated Content
+
 - ✅ SEO-optimized title
 - ✅ Meta description
 - ✅ AI Overviews summary
@@ -152,6 +163,7 @@ Generates structured article drafts based on a topic prompt.
 ### 📋 How to Use
 
 **Option 1: API Call (Recommended)**
+
 ```bash
 curl -X POST https://tech-knowlogia.netlify.app/api/ai-draft \
   -H "Content-Type: application/json" \
@@ -159,6 +171,7 @@ curl -X POST https://tech-knowlogia.netlify.app/api/ai-draft \
 ```
 
 **Option 2: Browser Console**
+
 ```javascript
 fetch('/api/ai-draft', {
   method: 'POST',
@@ -173,6 +186,7 @@ fetch('/api/ai-draft', {
 ```
 
 **Response Example:**
+
 ```json
 {
   "success": true,
@@ -190,11 +204,13 @@ fetch('/api/ai-draft', {
 ### 🔄 Upgrade with Real AI
 
 Replace template logic with:
+
 - **OpenAI GPT-4** - Best quality
 - **Google Gemini** - Great for news
 - **Anthropic Claude** - Long-form content
 
 Example OpenAI integration:
+
 ```typescript
 const response = await openai.chat.completions.create({
   model: "gpt-4",
@@ -210,6 +226,7 @@ const response = await openai.chat.completions.create({
 ## 5️⃣ BREAKING NEWS PUSH NOTIFICATIONS
 
 ### 🎯 What It Does
+
 Sends instant notifications when breaking news articles are published.
 
 ### 🔧 Files Created
@@ -217,6 +234,7 @@ Sends instant notifications when breaking news articles are published.
 **[app/api/notify/route.ts](app/api/notify/route.ts)** - Notification API
 
 ### 📋 Notification Channels (Ready to Integrate)
+
 - 🔔 OneSignal (Web Push)
 - 📧 Email (Resend/SendGrid)
 - 📱 Firebase Cloud Messaging
@@ -225,6 +243,7 @@ Sends instant notifications when breaking news articles are published.
 ### 📋 How to Use
 
 **Manual Trigger:**
+
 ```bash
 curl -X POST https://tech-knowlogia.netlify.app/api/notify \
   -H "Content-Type: application/json" \
@@ -242,6 +261,7 @@ Add to your CMS publish workflow to auto-detect `breaking: true`.
 ### 🔄 Production Setup
 
 **OneSignal Integration:**
+
 ```typescript
 await fetch('https://onesignal.com/api/v1/notifications', {
   method: 'POST',
@@ -258,6 +278,7 @@ await fetch('https://onesignal.com/api/v1/notifications', {
 ```
 
 **Email Notifications (Resend):**
+
 ```typescript
 await fetch('https://api.resend.com/emails', {
   method: 'POST',
@@ -306,16 +327,19 @@ blogging-website/
 ## 🎯 QUICK START CHECKLIST
 
 ### Deployment
+
 - [ ] Push all changes to GitHub
 - [ ] Deploy on Netlify
 - [ ] Enable Netlify Identity
 - [ ] Enable Git Gateway
 
 ### Role Setup
+
 - [ ] Assign yourself as `admin` role
 - [ ] Invite editors with `editor` role
 
 ### Test Features
+
 - [ ] Login to `/admin`
 - [ ] Create test article → Check **Preview**
 - [ ] Publish article → Check view tracking
@@ -361,21 +385,25 @@ DATABASE_URL=your_database_url_here
 ## 🆘 TROUBLESHOOTING
 
 ### Preview not showing
+
 - Clear browser cache
 - Check `/admin/preview.js` loads in Network tab
 - Verify `<script src="/admin/preview.js">` in index.html
 
 ### Analytics not tracking
+
 - Check browser console for errors
 - Verify ViewTracker component renders
 - Test API: `curl -X POST /api/views -d '{"slug":"test"}'`
 
 ### Roles not working
+
 - Verify roles added in config.yml
 - Check user role in Netlify Identity
 - Re-login to CMS after role change
 
 ### AI drafts empty
+
 - Check API endpoint: `GET /api/ai-draft`
 - Verify JSON payload format
 - Review server logs for errors
@@ -384,22 +412,24 @@ DATABASE_URL=your_database_url_here
 
 ## 🎓 LEARNING RESOURCES
 
-- **Decap CMS Docs**: https://decapcms.org/docs/
-- **Netlify Identity**: https://docs.netlify.com/visitor-access/identity/
-- **OpenAI API**: https://platform.openai.com/docs
-- **OneSignal**: https://documentation.onesignal.com/
+- **Decap CMS Docs**: <https://decapcms.org/docs/>
+- **Netlify Identity**: <https://docs.netlify.com/visitor-access/identity/>
+- **OpenAI API**: <https://platform.openai.com/docs>
+- **OneSignal**: <https://documentation.onesignal.com/>
 
 ---
 
 ## 🚀 WHAT'S NEXT?
 
 ### Immediate Enhancements
+
 1. **Database for Analytics**: Integrate Vercel KV or PostgreSQL
 2. **Real AI Integration**: Add OpenAI/Gemini API
 3. **Push Service**: Configure OneSignal for web push
 4. **Email List**: Build subscriber system for breaking news
 
 ### Future Features
+
 5. **Content Calendar**: Schedule posts in advance
 6. **A/B Testing**: Test headlines automatically
 7. **SEO Score**: Real-time SEO recommendations

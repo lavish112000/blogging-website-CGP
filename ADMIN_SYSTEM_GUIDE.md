@@ -1,4 +1,5 @@
 # 🔐 ADMIN SYSTEM GUIDE
+
 ## Tech-Knowlogia Private Admin Dashboard
 
 **Complete security architecture, setup instructions, and usage guide**
@@ -22,12 +23,14 @@
 Tech-Knowlogia has **TWO separate admin systems**:
 
 ### 1. **Decap CMS** (`/admin`)
+
 - **Who:** Editors and Admins
 - **Purpose:** Content management (create/edit/publish articles)
 - **Access:** Semi-public (requires Netlify Identity login)
 - **Features:** Editorial workflow, live preview, role-based permissions
 
 ### 2. **Admin Dashboard** (`/admin-dashboard`)
+
 - **Who:** ADMIN ONLY (you)
 - **Purpose:** Site management and analytics
 - **Access:** PRIVATE (completely hidden from public/editors/search engines)
@@ -40,10 +43,12 @@ Tech-Knowlogia has **TWO separate admin systems**:
 The admin dashboard uses **layered security**:
 
 ### Layer 1: Client-Side Protection
+
 - **Location:** `app/admin-dashboard/layout.tsx`
 - **Mechanism:** React auth checks with `useAuth()` hook
 - **Action:** Redirects unauthorized users to home page
 - **Code:**
+
   ```tsx
   const { user, loading } = useAuth()
   
@@ -55,10 +60,12 @@ The admin dashboard uses **layered security**:
   ```
 
 ### Layer 2: Metadata Protection
+
 - **Location:** All admin pages
 - **Mechanism:** Robots meta tags prevent indexing
 - **Action:** Blocks Google and other search engines
 - **Code:**
+
   ```tsx
   export const metadata = {
     robots: { index: false, follow: false }
@@ -66,22 +73,26 @@ The admin dashboard uses **layered security**:
   ```
 
 ### Layer 3: Server Protection
+
 - **Location:** `lib/auth.ts` → `checkAdminAuth()`
 - **Mechanism:** Server-side JWT validation (API routes)
 - **Action:** Rejects unauthorized API calls
 - **Status:** Placeholder - implement for production
 
 ### Layer 4: Infrastructure Protection
+
 - **Location:** `public/robots.txt`
 - **Mechanism:** Disallow admin routes
 - **Action:** Prevents crawlers from indexing
 - **Code:**
+
   ```
   Disallow: /admin-dashboard
   Disallow: /admin-dashboard/*
   ```
 
 ### Layer 5: UI Protection
+
 - **Location:** Entire public site
 - **Mechanism:** No navigation links to admin
 - **Action:** Admin dashboard invisible to users
@@ -93,6 +104,7 @@ The admin dashboard uses **layered security**:
 ### Step 1: Netlify Identity Configuration
 
 1. **Deploy to Netlify:**
+
    ```bash
    # Push to GitHub
    git add .
@@ -129,6 +141,7 @@ The admin dashboard uses **layered security**:
    - Complete signup
 
 3. **Assign Admin Role:**
+
    ```bash
    # Via Netlify CLI (install first: npm i -g netlify-cli)
    netlify identity:set-role --email your@email.com --role admin
@@ -156,12 +169,14 @@ The admin dashboard uses **layered security**:
 ### 1. Main Dashboard (`/admin-dashboard`)
 
 **Overview:**
+
 - Real-time stats (articles, views, drafts)
 - Top performing articles
 - Recent activity feed
 - Quick action buttons
 
 **Usage:**
+
 - View site health at a glance
 - Monitor recent changes
 - Quick navigation to other tools
@@ -169,17 +184,20 @@ The admin dashboard uses **layered security**:
 ### 2. Analytics (`/admin-dashboard/analytics`)
 
 **Features:**
+
 - View count tracking for all articles
 - Top 20 performing articles
 - Total views, tracked articles, average views
 - Refresh button for real-time data
 
 **Usage:**
+
 - Identify trending content
 - Optimize high-performing articles
 - Find underperforming content
 
 **API Integration:**
+
 ```tsx
 // Get all view data
 const response = await fetch('/api/views')
@@ -195,17 +213,20 @@ await fetch('/api/views', {
 ### 3. Trending Controls (`/admin-dashboard/trending`)
 
 **Features:**
+
 - Toggle featured status
 - Set priority (1-10 scale)
 - Separate featured/regular article sections
 - Save changes to frontmatter
 
 **Usage:**
+
 - Feature important articles
 - Control homepage order
 - Boost visibility of key content
 
 **How it works:**
+
 - Updates `featured: true` in article MDX
 - Sets `priority: number` (higher = more prominent)
 - CMS respects these flags
@@ -213,18 +234,21 @@ await fetch('/api/views', {
 ### 4. Breaking News Manager (`/admin-dashboard/breaking-news`)
 
 **Features:**
+
 - Toggle breaking news status
 - Send push notifications
 - Active breaking news section
 - Guidelines for breaking news
 
 **Usage:**
+
 1. Mark article as breaking: `breaking: true`
 2. Send notification to subscribers
 3. Article displays with "BREAKING" badge
 4. Auto-expires after 24h (optional)
 
 **API Integration:**
+
 ```tsx
 await fetch('/api/notify', {
   method: 'POST',
@@ -239,6 +263,7 @@ await fetch('/api/notify', {
 ### 5. AI Draft Generator (`/admin-dashboard/ai-drafts`)
 
 **Features:**
+
 - Topic input
 - Category selector
 - Template chooser (guide, news, how-to, analysis, opinion)
@@ -246,6 +271,7 @@ await fetch('/api/notify', {
 - Copy as Markdown
 
 **Usage:**
+
 1. Enter topic (e.g., "Quantum Computing")
 2. Select category
 3. Choose template style
@@ -255,10 +281,12 @@ await fetch('/api/notify', {
 7. Customize and publish
 
 **Current Implementation:**
+
 - Template-based (placeholder)
 - Production: Integrate OpenAI/Gemini/Claude
 
 **Integration Example:**
+
 ```typescript
 // app/api/ai-draft/route.ts
 import OpenAI from 'openai'
@@ -277,6 +305,7 @@ const completion = await openai.chat.completions.create({
 ### 6. Settings (`/admin-dashboard/settings`)
 
 **Configurable Options:**
+
 - Site name and tagline
 - Default author
 - Google Search Console verification
@@ -284,6 +313,7 @@ const completion = await openai.chat.completions.create({
 - Danger zone (clear data, rebuild sitemap)
 
 **Usage:**
+
 - Update site metadata
 - Enable/disable features
 - Manage SEO settings
@@ -304,6 +334,7 @@ const completion = await openai.chat.completions.create({
 ### Assigning Roles
 
 **Via Netlify UI:**
+
 1. Go to Identity > Users
 2. Click on user
 3. Edit role field
@@ -311,6 +342,7 @@ const completion = await openai.chat.completions.create({
 5. Save
 
 **Via Netlify CLI:**
+
 ```bash
 # Assign admin role
 netlify identity:set-role --email user@example.com --role admin
@@ -323,6 +355,7 @@ netlify identity:unset-role --email user@example.com
 ```
 
 **In Code (Verification):**
+
 ```typescript
 import { isAdmin, isEditor } from '@/lib/auth'
 
@@ -345,6 +378,7 @@ if (isEditor(user)) {
    - Send invitation
 
 2. **Assign Editor Role:**
+
    ```bash
    netlify identity:set-role --email editor@example.com --role editor
    ```
@@ -365,6 +399,7 @@ if (isEditor(user)) {
 **Cause:** Not logged in as admin
 
 **Solutions:**
+
 1. Check Netlify Identity is enabled
 2. Verify user has `admin` role
 3. Clear browser cache and cookies
@@ -372,6 +407,7 @@ if (isEditor(user)) {
 5. Check browser console for errors
 
 **Debug:**
+
 ```javascript
 // Open browser console on /admin-dashboard
 // Check auth state
@@ -385,6 +421,7 @@ console.log('User roles:', user?.app_metadata?.roles)
 **Cause:** Misconfigured `config.yml` or Git Gateway not enabled
 
 **Solutions:**
+
 1. Enable Git Gateway in Netlify Identity settings
 2. Check `public/admin/config.yml` syntax
 3. Verify backend is `git-gateway`
@@ -395,6 +432,7 @@ console.log('User roles:', user?.app_metadata?.roles)
 **Cause:** API endpoint issue or client-side error
 
 **Solutions:**
+
 1. Check API route: `app/api/views/route.ts` exists
 2. Verify fetch call in `components/article/ViewTracker.tsx`
 3. Check browser Network tab for API calls
@@ -405,8 +443,10 @@ console.log('User roles:', user?.app_metadata?.roles)
 **Cause:** Placeholder API not replaced with real service
 
 **Solutions:**
+
 1. Check `app/api/notify/route.ts` - currently console.log only
 2. Integrate OneSignal or Resend:
+
    ```typescript
    // OneSignal example
    await fetch('https://onesignal.com/api/v1/notifications', {
@@ -429,6 +469,7 @@ console.log('User roles:', user?.app_metadata?.roles)
 **Cause:** Using template-based generation (placeholder)
 
 **Solutions:**
+
 1. Integrate real AI API (OpenAI, Gemini, Claude)
 2. See integration example in **AI Draft Generator** section above
 3. Store API keys in Netlify Environment Variables
@@ -482,6 +523,7 @@ REDIS_URL=redis://...
 **Production:** Use persistent storage
 
 **Option 1: Database (PostgreSQL/MySQL)**
+
 ```typescript
 // app/api/views/route.ts
 import { sql } from '@vercel/postgres'
@@ -499,6 +541,7 @@ export async function POST(req: Request) {
 ```
 
 **Option 2: Redis (Fast, Simple)**
+
 ```typescript
 import { Redis } from '@upstash/redis'
 
@@ -515,6 +558,7 @@ export async function POST(req: Request) {
 ```
 
 **Option 3: Google Analytics API**
+
 ```typescript
 import { BetaAnalyticsDataClient } from '@google-analytics/data'
 
@@ -532,6 +576,7 @@ const [response] = await analytics.runReport({
 ### Security Hardening
 
 **1. Add Server-Side Auth:**
+
 ```typescript
 // lib/auth.ts - Implement checkAdminAuth()
 import { jwtVerify } from 'jose'
@@ -561,6 +606,7 @@ export async function checkAdminAuth(request: Request) {
 ```
 
 **2. Protect API Routes:**
+
 ```typescript
 // app/api/admin/*/route.ts
 import { checkAdminAuth } from '@/lib/auth'
@@ -576,6 +622,7 @@ export async function GET(req: Request) {
 ```
 
 **3. Add Rate Limiting:**
+
 ```typescript
 // middleware.ts
 import { Ratelimit } from '@upstash/ratelimit'
@@ -601,12 +648,14 @@ export async function middleware(req: Request) {
 ### Monitoring
 
 **Set up alerts for:**
+
 - Failed login attempts (>5 per hour)
 - Unusual API traffic to admin routes
 - Unauthorized access attempts
 - CMS commit errors
 
 **Tools:**
+
 - Netlify Analytics (built-in)
 - Sentry (error tracking)
 - LogRocket (session replay)
@@ -617,31 +666,36 @@ export async function middleware(req: Request) {
 ## 📚 ADDITIONAL RESOURCES
 
 ### Documentation
+
 - [Netlify Identity](https://docs.netlify.com/visitor-access/identity/)
 - [Decap CMS](https://decapcms.org/docs/)
 - [Next.js App Router](https://nextjs.org/docs/app)
 - [Git Gateway](https://docs.netlify.com/visitor-access/git-gateway/)
 
 ### Feature Guides
+
 - `PUBLISHER_FEATURES.md` - Detailed feature documentation
 - `CMS_SETUP.md` - CMS configuration guide
 - `API_INTEGRATION.md` - API reference (create if needed)
 
 ### Support
+
 - GitHub Issues: Report bugs and request features
-- Email: admin@tech-knowlogia.com
-- Netlify Support: https://answers.netlify.com/
+- Email: <admin@tech-knowlogia.com>
+- Netlify Support: <https://answers.netlify.com/>
 
 ---
 
 ## 🎯 QUICK REFERENCE
 
 ### URLs
+
 - **Public Site:** `https://tech-knowlogia.com`
 - **CMS:** `https://tech-knowlogia.com/admin`
 - **Admin Dashboard:** `https://tech-knowlogia.com/admin-dashboard`
 
 ### Commands
+
 ```bash
 # Deploy site
 git push origin main
@@ -657,6 +711,7 @@ npm run build
 ```
 
 ### File Locations
+
 - **Auth Utility:** `lib/auth.ts`
 - **Auth Provider:** `components/auth/AuthProvider.tsx`
 - **Admin Layout:** `app/admin-dashboard/layout.tsx`
