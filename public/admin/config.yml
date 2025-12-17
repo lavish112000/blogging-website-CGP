@@ -1,6 +1,9 @@
 backend:
   name: git-gateway
   branch: main
+  roles:
+    - admin
+    - editor
 
 site_url: https://tech-knowlogia.netlify.app
 display_url: https://tech-knowlogia.netlify.app
