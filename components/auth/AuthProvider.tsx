@@ -38,11 +38,6 @@ export function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     // Initialize Netlify Identity
     if (typeof window !== 'undefined' && window.netlifyIdentity) {
-      // Get current user
-      const currentUser = window.netlifyIdentity.currentUser()
-      setUser(currentUser)
-      setLoading(false)
-
       // Listen for auth changes
       window.netlifyIdentity.on('login', (user?: NetlifyUser) => {
         setUser(user || null)
@@ -53,6 +48,21 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setUser(null)
         setLoading(false)
       })
+
+      window.netlifyIdentity.on('init', (user?: NetlifyUser) => {
+        setUser(user || null)
+        setLoading(false)
+      })
+
+      // Initialize the widget
+      window.netlifyIdentity.init()
+
+      // Get current user after init
+      const currentUser = window.netlifyIdentity.currentUser()
+      if (currentUser) {
+        setUser(currentUser)
+      }
+      setLoading(false)
 
       window.netlifyIdentity.on('init', (user?: NetlifyUser) => {
         setUser(user || null)

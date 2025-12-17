@@ -13,7 +13,16 @@ export default function AIDraftsPage() {
   const [topic, setTopic] = useState('')
   const [category, setCategory] = useState('technology')
   const [template, setTemplate] = useState('comprehensive-guide')
-  const [draft, setDraft] = useState<{ title: string; description: string; summary: string; body: string } | null>(null)
+  const [draft, setDraft] = useState<{ 
+    title: string; 
+    description: string; 
+    summary: string; 
+    body: string;
+    tags: string[];
+    featured: boolean;
+    priority: number;
+    breaking: boolean;
+  } | null>(null)
   const [loading, setLoading] = useState(false)
   const [copied, setCopied] = useState(false)
 
