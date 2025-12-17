@@ -44,8 +44,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       setLoading(false)
 
       // Listen for auth changes
-      window.netlifyIdentity.on('login', (user: NetlifyUser) => {
-        setUser(user)
+      window.netlifyIdentity.on('login', (user?: NetlifyUser) => {
+        setUser(user || null)
         setLoading(false)
       })
 
@@ -54,8 +54,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setLoading(false)
       })
 
-      window.netlifyIdentity.on('init', (user: NetlifyUser) => {
-        setUser(user)
+      window.netlifyIdentity.on('init', (user?: NetlifyUser) => {
+        setUser(user || null)
         setLoading(false)
       })
     } else {
