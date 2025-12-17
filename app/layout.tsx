@@ -113,6 +113,12 @@ export default function RootLayout({
           crossOrigin="anonymous"
           strategy="afterInteractive"
         />
+
+        {/* Netlify Identity (needed for password recovery links) */}
+        <Script
+          src="https://identity.netlify.com/v1/netlify-identity-widget.js"
+          strategy="afterInteractive"
+        />
       </head>
       <body className={`${inter.variable} font-sans antialiased`}>
         <AuthProvider>
