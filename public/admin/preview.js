@@ -3,21 +3,30 @@
  * Shows real-time article preview before publishing
  */
 
-const PostPreview = ({ entry, widgetFor }) => {
-  const title = entry.getIn(["data", "title"]);
-  const description = entry.getIn(["data", "description"]);
-  const summary = entry.getIn(["data", "summary"]);
-  const author = entry.getIn(["data", "author"]);
-  const date = entry.getIn(["data", "date"]);
-  const featured = entry.getIn(["data", "featured"]);
-  const breaking = entry.getIn(["data", "breaking"]);
-  const priority = entry.getIn(["data", "priority"]);
-  const tags = entry.getIn(["data", "tags"]);
+(function () {
+  'use strict';
 
-  return window.h(
-    "div",
-    { style: { padding: "24px", fontFamily: "system-ui", maxWidth: "800px", margin: "0 auto" } },
-    [
+  function registerPreviews() {
+    if (!window.CMS || !window.h) {
+      // CMS script can load slowly; avoid hard crash.
+      return;
+    }
+
+    const PostPreview = ({ entry, widgetFor }) => {
+      const title = entry.getIn(["data", "title"]);
+      const description = entry.getIn(["data", "description"]);
+      const summary = entry.getIn(["data", "summary"]);
+      const author = entry.getIn(["data", "author"]);
+      const date = entry.getIn(["data", "date"]);
+      const featured = entry.getIn(["data", "featured"]);
+      const breaking = entry.getIn(["data", "breaking"]);
+      const priority = entry.getIn(["data", "priority"]);
+      const tags = entry.getIn(["data", "tags"]);
+
+      return window.h(
+        "div",
+        { style: { padding: "24px", fontFamily: "system-ui", maxWidth: "800px", margin: "0 auto" } },
+        [
       // Breaking badge
       breaking && window.h(
         "div",
@@ -81,13 +90,20 @@ const PostPreview = ({ entry, widgetFor }) => {
           ).toArray()
         ]
       )
-    ]
-  );
-};
+        ]
+      );
+    };
 
-// Register preview template for all categories
-CMS.registerPreviewTemplate("technology", PostPreview);
-CMS.registerPreviewTemplate("business", PostPreview);
-CMS.registerPreviewTemplate("design", PostPreview);
-CMS.registerPreviewTemplate("lifestyle", PostPreview);
-CMS.registerPreviewTemplate("blog", PostPreview);
+    // Register preview template for all categories
+    window.CMS.registerPreviewTemplate("technology", PostPreview);
+    window.CMS.registerPreviewTemplate("business", PostPreview);
+    window.CMS.registerPreviewTemplate("design", PostPreview);
+    window.CMS.registerPreviewTemplate("lifestyle", PostPreview);
+    window.CMS.registerPreviewTemplate("blog", PostPreview);
+  }
+
+  // Try immediately; if CMS isn't ready yet, retry shortly.
+  registerPreviews();
+  setTimeout(registerPreviews, 50);
+  setTimeout(registerPreviews, 250);
+})();
