@@ -153,6 +153,21 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
         suppressHydrationWarning
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
+      <script async type="application/javascript" src="https://news.google.com/swg/js/v1/swg-basic.js"></script>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            (self.SWG_BASIC = self.SWG_BASIC || []).push( basicSubscriptions => {
+              basicSubscriptions.init({
+                type: "NewsArticle",
+                isPartOfType: ["Product"],
+                isPartOfProductId: "CAowgOHDDA:openaccess",
+                clientOptions: { theme: "light", lang: "en" },
+              });
+            });
+          `,
+        }}
+      />
       <article className="min-h-screen">
       {/* Hero Section */}
       <div className="relative bg-linear-to-br from-muted/50 to-muted/30 border-b border-border">

@@ -1,13 +1,12 @@
 backend:
-  name: github
-  repo: lavish112000/blogging-website-CGP
+  name: git-gateway
   branch: main
 
-media_folder: "public/images/uploads"
-public_folder: "/images/uploads"
+site_url: https://tech-knowlogia.netlify.app
+display_url: https://tech-knowlogia.netlify.app
 
-site_url: "https://tech-knowlogia.com"
-logo_url: "/favicon.ico"
+media_folder: "public/uploads"
+public_folder: "/uploads"
 
 publish_mode: editorial_workflow
 
@@ -27,7 +26,7 @@ collections:
       - { name: "date", label: "Publish Date", widget: "datetime" }
       - { name: "category", label: "Category", widget: "hidden", default: "blog" }
       - { name: "tags", label: "Tags", widget: "list", default: [] }
-      - { name: "author", label: "Author", widget: "string", default: "Tech-Knowlogia Team" }
+      - { name: "author", label: "Author", widget: "string", default: "Lalit Choudhary" }
       - { name: "featured", label: "Featured", widget: "boolean", default: false, required: false }
       - { name: "priority", label: "Priority (1-10)", widget: "number", value_type: "int", min: 1, max: 10, default: 5, required: false }
       - { name: "breaking", label: "Breaking", widget: "boolean", default: false, required: false }
@@ -58,7 +57,7 @@ collections:
       - { name: "date", label: "Publish Date", widget: "datetime" }
       - { name: "category", label: "Category", widget: "hidden", default: "lifestyle" }
       - { name: "tags", label: "Tags", widget: "list", default: [] }
-      - { name: "author", label: "Author", widget: "string", default: "Tech-Knowlogia Team" }
+      - { name: "author", label: "Author", widget: "string", default: "Lalit Choudhary" }
       - { name: "featured", label: "Featured", widget: "boolean", default: false, required: false }
       - { name: "priority", label: "Priority (1-10)", widget: "number", value_type: "int", min: 1, max: 10, default: 5, required: false }
       - { name: "breaking", label: "Breaking", widget: "boolean", default: false, required: false }
@@ -89,7 +88,7 @@ collections:
       - { name: "date", label: "Publish Date", widget: "datetime" }
       - { name: "category", label: "Category", widget: "hidden", default: "design" }
       - { name: "tags", label: "Tags", widget: "list", default: [] }
-      - { name: "author", label: "Author", widget: "string", default: "Tech-Knowlogia Team" }
+      - { name: "author", label: "Author", widget: "string", default: "Lalit Choudhary" }
       - { name: "featured", label: "Featured", widget: "boolean", default: false, required: false }
       - { name: "priority", label: "Priority (1-10)", widget: "number", value_type: "int", min: 1, max: 10, default: 5, required: false }
       - { name: "breaking", label: "Breaking", widget: "boolean", default: false, required: false }
@@ -120,7 +119,7 @@ collections:
       - { name: "date", label: "Publish Date", widget: "datetime" }
       - { name: "category", label: "Category", widget: "hidden", default: "technology" }
       - { name: "tags", label: "Tags", widget: "list", default: [] }
-      - { name: "author", label: "Author", widget: "string", default: "Tech-Knowlogia Team" }
+      - { name: "author", label: "Author", widget: "string", default: "Lalit Choudhary" }
       - { name: "featured", label: "Featured", widget: "boolean", default: false, required: false }
       - { name: "priority", label: "Priority (1-10)", widget: "number", value_type: "int", min: 1, max: 10, default: 5, required: false }
       - { name: "breaking", label: "Breaking", widget: "boolean", default: false, required: false }
@@ -151,7 +150,7 @@ collections:
       - { name: "date", label: "Publish Date", widget: "datetime" }
       - { name: "category", label: "Category", widget: "hidden", default: "business" }
       - { name: "tags", label: "Tags", widget: "list", default: [] }
-      - { name: "author", label: "Author", widget: "string", default: "Tech-Knowlogia Team" }
+      - { name: "author", label: "Author", widget: "string", default: "Lalit Choudhary" }
       - { name: "featured", label: "Featured", widget: "boolean", default: false, required: false }
       - { name: "priority", label: "Priority (1-10)", widget: "number", value_type: "int", min: 1, max: 10, default: 5, required: false }
       - { name: "breaking", label: "Breaking", widget: "boolean", default: false, required: false }
