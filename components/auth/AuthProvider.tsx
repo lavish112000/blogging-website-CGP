@@ -54,20 +54,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
         setLoading(false)
       })
 
-      // Initialize the widget
+      // Initialize the widget - this triggers the 'init' event which sets user state
       window.netlifyIdentity.init()
-
-      // Get current user after init
-      const currentUser = window.netlifyIdentity.currentUser()
-      if (currentUser) {
-        setUser(currentUser)
-      }
-      setLoading(false)
-
-      window.netlifyIdentity.on('init', (user?: NetlifyUser) => {
-        setUser(user || null)
-        setLoading(false)
-      })
     } else {
       // Fallback if Netlify Identity script not loaded
       setLoading(false)
@@ -107,6 +95,7 @@ declare global {
       open: (tab?: 'login' | 'signup') => void
       logout: () => void
       on: (event: string, callback: (user?: NetlifyUser) => void) => void
+      init: () => void
     }
   }
 }
