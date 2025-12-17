@@ -1,8 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { TrendingUp, Star, ArrowUp, Save } from 'lucide-react'
-import { getAllPosts } from '@/lib/mdx'
+import { Star, Save } from 'lucide-react'
 
 interface Post {
   slug: string
@@ -187,14 +186,16 @@ function ArticleCard({
       <div className="flex items-center gap-3">
         {/* Priority Slider */}
         <div className="flex items-center gap-2">
-          <span className="text-xs text-muted-foreground">Priority:</span>
+          <label htmlFor={`priority-${post.slug}`} className="text-xs text-muted-foreground">Priority:</label>
           <input
+            id={`priority-${post.slug}`}
             type="range"
             min="1"
             max="10"
             value={post.priority || 5}
             onChange={(e) => onUpdatePriority(post.slug, parseInt(e.target.value))}
             className="w-24"
+            aria-label="Article priority from 1 to 10"
           />
           <span className="text-sm font-bold w-6 text-center">{post.priority || 5}</span>
         </div>

@@ -121,8 +121,8 @@ export default function BreakingNewsPage() {
             <h3 className="font-semibold text-red-900 dark:text-red-100 mb-2">Breaking News Guidelines</h3>
             <ul className="text-sm text-red-800 dark:text-red-200 space-y-1">
               <li>• Use sparingly - only for truly breaking, time-sensitive news</li>
-              <li>• Toggle "Breaking" to add red badge to article</li>
-              <li>• Click "Send Notification" to alert subscribers</li>
+              <li>• Toggle &ldquo;Breaking&rdquo; to add red badge to article</li>
+              <li>• Click &ldquo;Send Notification&rdquo; to alert subscribers</li>
               <li>• Notifications go to all subscribers (cannot be undone)</li>
             </ul>
           </div>

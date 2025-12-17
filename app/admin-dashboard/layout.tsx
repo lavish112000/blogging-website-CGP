@@ -113,12 +113,12 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <div className="mt-8 p-4 bg-muted/50 rounded-lg">
               <h3 className="font-semibold text-sm mb-3">Quick Links</h3>
               <div className="space-y-2 text-sm">
-                <a href="/admin" className="block text-blue-600 hover:underline">
+                <Link href="/admin" className="block text-blue-600 hover:underline">
                   CMS Dashboard
-                </a>
-                <a href="/" className="block text-muted-foreground hover:text-foreground">
+                </Link>
+                <Link href="/" className="block text-muted-foreground hover:text-foreground">
                   View Public Site
-                </a>
+                </Link>
               </div>
             </div>
           </aside>
