@@ -3,6 +3,7 @@
 ## ✅ STRENGTHS (What's Already Implemented)
 
 ### 1. ✅ High-Quality Content Structure
+
 - **Status:** EXCELLENT
 - Original, research-backed content in multiple categories
 - Well-structured MDX files with proper frontmatter
@@ -10,6 +11,7 @@
 - Tags and categorization properly implemented
 
 ### 2. ✅ Schema Markup (Structured Data)
+
 - **Status:** EXCELLENT
 - NewsArticle schema implemented on all articles
 - Proper `@type: ['NewsArticle', 'Article']` declaration
@@ -18,6 +20,7 @@
 - CollectionPage schema for category pages
 
 ### 3. ✅ SEO Foundation
+
 - **Status:** STRONG
 - Comprehensive metadata implementation
 - OpenGraph tags for all pages
@@ -26,6 +29,7 @@
 - Google Search Console verification code present
 
 ### 4. ✅ Mobile Optimization
+
 - **Status:** EXCELLENT
 - Next.js responsive design
 - Mobile-first approach with Tailwind CSS
@@ -33,6 +37,7 @@
 - Progressive Web App capabilities
 
 ### 5. ✅ Website Performance
+
 - **Status:** EXCELLENT
 - Next.js static generation for fast loading
 - Vercel Analytics and Speed Insights integrated
@@ -40,6 +45,7 @@
 - CDN delivery via Netlify
 
 ### 6. ✅ Sitemaps
+
 - **Status:** IMPLEMENTED TODAY
 - Main sitemap.xml created with proper priorities
 - Google News sitemap with recent articles (30 days)
@@ -47,6 +53,7 @@
 - Image sitemap support in news feed
 
 ### 7. ✅ Robots.txt
+
 - **Status:** PROPER
 - Clear crawl directives
 - Admin routes properly blocked
@@ -57,8 +64,9 @@
 ## ⚠️ IMPROVEMENTS NEEDED
 
 ### 1. 🔴 CRITICAL: Google Publisher Center
+
 - **Status:** NOT REGISTERED
-- **Action Required:** 
+- **Action Required:**
   1. Visit [Google Publisher Center](https://publishercenter.google.com/)
   2. Claim your website: tech-knowlogia.com
   3. Verify ownership (Search Console verification already done ✅)
@@ -66,6 +74,7 @@
   5. Configure branding and publication details
 
 ### 2. 🟡 Publishing Schedule
+
 - **Status:** NEEDS CONSISTENCY
 - **Current:** Limited articles published
 - **Recommendation:**
@@ -75,6 +84,7 @@
   - Use the Decap CMS admin dashboard to schedule posts
 
 ### 3. 🟡 Article Freshness
+
 - **Status:** GOOD (Recent content exists)
 - **Recommendation:**
   - Keep publishing fresh content daily/weekly
@@ -82,6 +92,7 @@
   - Add "Last Updated" dates to show content maintenance
 
 ### 4. 🟢 Google News Tags Enhancement
+
 - **Status:** PARTIALLY IMPLEMENTED
 - **Action:** Enhanced news sitemap with:
   - ✅ Publication name and language
@@ -90,11 +101,13 @@
   - ⚠️ Consider adding genre/stock tickers if relevant
 
 ### 5. 🟡 Subscription Widget (Optional)
+
 - **Status:** NOT IMPLEMENTED
 - **Note:** Already added Subscribe with Google script to articles
 - **Enhancement:** Consider newsletter CTA for Google News readers
 
 ### 6. 🟢 Bylines and Author Pages
+
 - **Status:** GOOD
 - **Enhancement:**
   - Create dedicated author bio pages
@@ -128,49 +141,52 @@
 ## 🎯 IMMEDIATE ACTION PLAN
 
 ### Phase 1: Critical (Do This Week)
+
 1. **Register with Google Publisher Center**
-   - Go to https://publishercenter.google.com/
+   - Go to <https://publishercenter.google.com/>
    - Claim tech-knowlogia.com
    - Submit for Google News inclusion
-   
+
 2. **Deploy Latest Changes**
    - Enhanced news-sitemap.xml is ready
    - Main sitemap.ts is ready
    - Push to production
 
 3. **Verify Sitemaps**
-   - Check https://tech-knowlogia.com/sitemap.xml
-   - Check https://tech-knowlogia.com/news-sitemap.xml
+   - Check <https://tech-knowlogia.com/sitemap.xml>
+   - Check <https://tech-knowlogia.com/news-sitemap.xml>
    - Submit both to Google Search Console
 
 ### Phase 2: Short-term (This Month)
-4. **Establish Publishing Cadence**
+
+1. **Establish Publishing Cadence**
    - Create editorial calendar
    - Publish 3-5 articles per week
    - Cover timely topics in your niches
 
-5. **Add Google Analytics 4**
+2. **Add Google Analytics 4**
    - Set up GA4 property
    - Track user behavior for Publisher Center metrics
    - Monitor article performance
 
-6. **Create Author Pages**
+3. **Create Author Pages**
    - Build `/authors/[name]` routes
    - List all articles by author
    - Add author bios and social links
 
 ### Phase 3: Ongoing
-7. **Content Quality Maintenance**
+
+1. **Content Quality Maintenance**
    - Update older articles quarterly
    - Add "Updated on" dates
    - Keep content accurate and timely
 
-8. **Monitor Performance**
+2. **Monitor Performance**
    - Check Publisher Center metrics weekly
    - Optimize underperforming content
    - Double down on successful topics
 
-9. **Engage with Feedback**
+3. **Engage with Feedback**
    - Respond to Google News feedback
    - Adjust content strategy based on data
    - Maintain compliance with guidelines
@@ -180,6 +196,7 @@
 ## 📈 GOOGLE NEWS BEST PRACTICES
 
 ### Content Guidelines
+
 - ✅ Original reporting and analysis
 - ✅ Clear author bylines
 - ✅ Publication dates visible
@@ -189,6 +206,7 @@
 - ⚠️ Add corrections/updates when needed
 
 ### Technical Guidelines
+
 - ✅ Fast page load (< 3 seconds)
 - ✅ Mobile-responsive design
 - ✅ HTTPS everywhere
@@ -198,6 +216,7 @@
 - ✅ Proper robots.txt
 
 ### Publishing Guidelines
+
 - ⚠️ Regular content updates (3-5x/week recommended)
 - ✅ Timely, newsworthy content
 - ✅ Diverse topics within your niche
@@ -209,19 +228,19 @@
 ## 🎓 RESOURCES
 
 1. **Google Publisher Center**
-   - https://publishercenter.google.com/
+   - <https://publishercenter.google.com/>
 
 2. **Google News Content Policies**
-   - https://support.google.com/news/publisher-center/answer/9606702
+   - <https://support.google.com/news/publisher-center/answer/9606702>
 
 3. **Technical Requirements**
-   - https://support.google.com/news/publisher-center/answer/9606710
+   - <https://support.google.com/news/publisher-center/answer/9606710>
 
 4. **Google Search Console**
-   - https://search.google.com/search-console
+   - <https://search.google.com/search-console>
 
 5. **Schema.org NewsArticle**
-   - https://schema.org/NewsArticle
+   - <https://schema.org/NewsArticle>
 
 ---
 
@@ -234,6 +253,7 @@ Your website is **VERY WELL PREPARED** for Google News inclusion! The technical 
 **The Only Critical Missing Piece:** Registration with Google Publisher Center.
 
 **Next Steps:**
+
 1. Register at Google Publisher Center TODAY
 2. Establish a consistent 3-5 articles/week publishing schedule
 3. Deploy the enhanced sitemaps (already created)
