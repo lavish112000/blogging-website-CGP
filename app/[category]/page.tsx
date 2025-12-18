@@ -98,6 +98,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       <main className="min-h-screen bg-background">
       {/* Hero Section */}
       <section className="relative py-20 md:py-28 overflow-hidden">
+        {/* Lifestyle - Cyan/Pink gradient */}
         {category === 'lifestyle' && (
           <div className="absolute inset-0 z-0 opacity-60">
             <Silk
@@ -109,6 +110,59 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
             />
           </div>
         )}
+        
+        {/* Technology - Emerald/Teal gradient */}
+        {category === 'technology' && (
+          <div className="absolute inset-0 z-0 opacity-60">
+            <Silk
+              speed={4.5}
+              scale={1.2}
+              color="#10B981"
+              noiseIntensity={1.3}
+              rotation={45}
+            />
+          </div>
+        )}
+        
+        {/* Design - Purple/Indigo gradient */}
+        {category === 'design' && (
+          <div className="absolute inset-0 z-0 opacity-60">
+            <Silk
+              speed={5.5}
+              scale={1.1}
+              color="#9333EA"
+              noiseIntensity={1.4}
+              rotation={90}
+            />
+          </div>
+        )}
+        
+        {/* Business - Orange/Amber gradient */}
+        {category === 'business' && (
+          <div className="absolute inset-0 z-0 opacity-60">
+            <Silk
+              speed={4.8}
+              scale={1.15}
+              color="#F97316"
+              noiseIntensity={1.6}
+              rotation={135}
+            />
+          </div>
+        )}
+        
+        {/* Web Development (blog) - Blue/Cyan gradient */}
+        {category === 'blog' && (
+          <div className="absolute inset-0 z-0 opacity-60">
+            <Silk
+              speed={5.2}
+              scale={1.05}
+              color="#2563EB"
+              noiseIntensity={1.2}
+              rotation={180}
+            />
+          </div>
+        )}
+        
         <div className={`absolute inset-0 bg-gradient-to-br ${categoryInfo.gradient} opacity-10`} />
         <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
         

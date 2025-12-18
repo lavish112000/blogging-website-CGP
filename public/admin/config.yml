@@ -27,6 +27,7 @@ collections:
       - { name: "title", label: "Title", widget: "string" }
       - { name: "description", label: "Description", widget: "text" }
       - { name: "date", label: "Publish Date", widget: "datetime" }
+      - { name: "updatedAt", label: "Last Updated", widget: "datetime", required: false }
       - { name: "category", label: "Category", widget: "hidden", default: "blog" }
       - { name: "tags", label: "Tags", widget: "list", default: [] }
       - { name: "author", label: "Author", widget: "string", default: "Lalit Choudhary" }
@@ -58,6 +59,7 @@ collections:
       - { name: "title", label: "Title", widget: "string" }
       - { name: "description", label: "Description", widget: "text" }
       - { name: "date", label: "Publish Date", widget: "datetime" }
+      - { name: "updatedAt", label: "Last Updated", widget: "datetime", required: false }
       - { name: "category", label: "Category", widget: "hidden", default: "lifestyle" }
       - { name: "tags", label: "Tags", widget: "list", default: [] }
       - { name: "author", label: "Author", widget: "string", default: "Lalit Choudhary" }
@@ -89,6 +91,7 @@ collections:
       - { name: "title", label: "Title", widget: "string" }
       - { name: "description", label: "Description", widget: "text" }
       - { name: "date", label: "Publish Date", widget: "datetime" }
+      - { name: "updatedAt", label: "Last Updated", widget: "datetime", required: false }
       - { name: "category", label: "Category", widget: "hidden", default: "design" }
       - { name: "tags", label: "Tags", widget: "list", default: [] }
       - { name: "author", label: "Author", widget: "string", default: "Lalit Choudhary" }
@@ -120,6 +123,7 @@ collections:
       - { name: "title", label: "Title", widget: "string" }
       - { name: "description", label: "Description", widget: "text" }
       - { name: "date", label: "Publish Date", widget: "datetime" }
+      - { name: "updatedAt", label: "Last Updated", widget: "datetime", required: false }
       - { name: "category", label: "Category", widget: "hidden", default: "technology" }
       - { name: "tags", label: "Tags", widget: "list", default: [] }
       - { name: "author", label: "Author", widget: "string", default: "Lalit Choudhary" }
@@ -151,6 +155,7 @@ collections:
       - { name: "title", label: "Title", widget: "string" }
       - { name: "description", label: "Description", widget: "text" }
       - { name: "date", label: "Publish Date", widget: "datetime" }
+      - { name: "updatedAt", label: "Last Updated", widget: "datetime", required: false }
       - { name: "category", label: "Category", widget: "hidden", default: "business" }
       - { name: "tags", label: "Tags", widget: "list", default: [] }
       - { name: "author", label: "Author", widget: "string", default: "Lalit Choudhary" }

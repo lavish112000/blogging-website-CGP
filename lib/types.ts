@@ -20,6 +20,7 @@ export interface Post {
   description: string
   content: string
   date: string
+  updatedAt?: string
   category: Category
   tags: string[]
   author: Author | string
@@ -40,6 +41,7 @@ export interface PostFrontmatter {
   title: string
   description: string
   date: string
+  updatedAt?: string
   category: Category
   tags: string[]
   author: Author | string
