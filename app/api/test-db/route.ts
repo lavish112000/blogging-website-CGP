@@ -4,6 +4,16 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
+    if (!process.env.MONGODB_URI) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Missing MONGODB_URI environment variable',
+        },
+        { status: 500 }
+      );
+    }
+
     // Test database connection
     await connectDB();
     
