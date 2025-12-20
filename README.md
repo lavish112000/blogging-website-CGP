@@ -1,36 +1,333 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tech-Knowlogia
 
-## Getting Started
+Tech-Knowlogia is a modern, SEO-first blogging platform built with **Next.js App Router**. It ships with publisher-grade tooling: MDX content workflow, Decap CMS editor, a private admin dashboard, RSS + sitemaps (including **Google News** sitemap), and optional MongoDB storage.
 
-First, run the development server:
+---
+
+## Quick Links (Production)
+
+> Update the domain below if you deploy under a different host.
+
+- Site: [https://tech-knowlogia.com](https://tech-knowlogia.com)
+- RSS: [https://tech-knowlogia.com/feed.xml](https://tech-knowlogia.com/feed.xml)
+- Sitemap: [https://tech-knowlogia.com/sitemap.xml](https://tech-knowlogia.com/sitemap.xml)
+- Google News sitemap: [https://tech-knowlogia.com/news-sitemap.xml](https://tech-knowlogia.com/news-sitemap.xml)
+- CMS (Decap): `/admin`
+- Private Admin Dashboard (Admin-only): `/admin-dashboard`
+- MongoDB smoke test (local/prod): `/api/test-db`
+
+---
+
+## What’s Implemented (Thorough Overview)
+
+### 1) Content Platform
+
+- **MDX-based articles** with frontmatter-driven metadata.
+- **Category + article routing** via App Router: `/[category]` and `/[category]/[slug]`.
+- **5 categories**: technology, business, design, lifestyle, blog.
+
+### 2) SEO + Social + Structured Data
+
+- Page-level metadata via Next.js Metadata API.
+- OpenGraph images (via API route) + canonical URLs.
+- JSON-LD structured data:
+  - `NewsArticle` / `Article` on article pages
+  - `CollectionPage` on category pages
+
+### 3) Google News Readiness
+
+- **Google News sitemap** at `/news-sitemap.xml` (last 30 days of posts).
+- Robots rules include `Googlebot-News` and declare sitemaps.
+- Assessment & action plan documented in `GOOGLE_NEWS_ASSESSMENT.md`.
+
+### 4) Animated Category Pages
+
+- Category pages ship animated backgrounds using a lightweight WebGL shader (“Silk”) via `@react-three/fiber`.
+
+### 5) Publisher/Admin Tooling
+
+This project contains **two admin surfaces**:
+
+1. **Decap CMS** (`/admin`)
+   - Content creation/editing/publishing.
+   - Role-based permissions (admin/editor) using Netlify Identity.
+
+2. **Private Admin Dashboard** (`/admin-dashboard`)
+   - Analytics overview (view counts)
+   - Trending controls
+   - Breaking news management + notification trigger
+   - AI draft generator (currently template-based)
+
+Security layers are documented in `SECURITY_ARCHITECTURE.md`.
+
+### 6) MongoDB (Optional Data Storage)
+
+- MongoDB connection handler with caching for dev hot reloads.
+- Sample model (`User`) + test endpoint.
+- Atlas free tier (M0) supported.
+
+See `MONGODB_SETUP.md` for setup and verification steps.
+
+---
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router)
+- **Runtime/UI**: React 19, TypeScript
+- **Styling**: Tailwind CSS v4
+- **Content**: MDX (gray-matter, markdown-it)
+- **Animation**: Framer Motion, GSAP
+- **Background shader**: `@react-three/fiber` + Three.js
+- **Database** (optional): MongoDB Atlas + Mongoose
+- **Deployment**: Netlify (`@netlify/plugin-nextjs`)
+
+---
+
+## Local Development
+
+### Prerequisites
+
+- Node.js 18+ recommended
+- npm 9+ recommended
+
+### Install
+
+```bash
+npm install
+```
+
+### Environment Variables
+
+Create `.env.local` in the project root.
+
+Minimum recommended:
+
+```bash
+NEXT_PUBLIC_SITE_URL=http://localhost:8080
+```
+
+If you want MongoDB features enabled:
+
+```bash
+MONGODB_URI=mongodb+srv://<user>:<pass>@<cluster>/<db>?retryWrites=true&w=majority
+```
+
+Optional (if you use them):
+
+```bash
+NEXT_PUBLIC_GA_ID=
+NEXT_PUBLIC_ADSENSE_CLIENT_ID=
+
+# Optional integrations (used by /api/notify GET status)
+ONESIGNAL_API_KEY=
+ONESIGNAL_APP_ID=
+RESEND_API_KEY=
+```
+
+### Run Dev Server
+
+This repo is configured to run on **port 8080**.
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:8080](http://localhost:8080)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Key URLs (Local)
 
-## Learn More
+- Home: [http://localhost:8080](http://localhost:8080)
+- RSS: [http://localhost:8080/feed.xml](http://localhost:8080/feed.xml)
+- Sitemap: [http://localhost:8080/sitemap.xml](http://localhost:8080/sitemap.xml)
+- News sitemap: [http://localhost:8080/news-sitemap.xml](http://localhost:8080/news-sitemap.xml)
+- MongoDB test: [http://localhost:8080/api/test-db](http://localhost:8080/api/test-db)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## API Surface (Built-In)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+All endpoints are implemented as Next.js Route Handlers in `app/api/*`.
 
-## Deploy on Vercel
+| Route | Method | Purpose | Notes |
+| --- | --- | --- | --- |
+| `/api/test-db` | GET | MongoDB connection test | Requires `MONGODB_URI` |
+| `/api/subscribe` | POST | Newsletter subscribe | Stub (logs only); integrate ESP |
+| `/api/views` | POST/GET | View tracking + analytics | In-memory (resets on restart) |
+| `/api/ai-draft` | POST/GET | Draft generator | Template-based (upgrade to real AI) |
+| `/api/notify` | POST/GET | Breaking news notifications | Placeholder integrations |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## MongoDB Integration
+
+This repo already includes:
+
+- `lib/mongodb.ts` (connection + caching)
+- `models/User.ts` (sample schema)
+- `app/api/test-db/route.ts` (smoke test)
+
+### Verify MongoDB Locally
+
+1. Set `MONGODB_URI` in `.env.local`
+2. Start dev server: `npm run dev`
+3. Visit: [http://localhost:8080/api/test-db](http://localhost:8080/api/test-db)
+
+Expected response:
+
+```json
+{
+  "success": true,
+  "message": "MongoDB connection successful!",
+  "userCount": 0,
+  "timestamp": "..."
+}
+```
+
+Deployment notes (Atlas):
+
+- For hosted deployments (Netlify), Atlas Network Access must allow your environment.
+- Easiest dev setting: allow `0.0.0.0/0` (use with caution).
+
+---
+
+## Deployment (Netlify)
+
+This repo includes `netlify.toml` and uses `@netlify/plugin-nextjs`.
+
+### Required Netlify Settings
+
+- Build command: `npm run build`
+- Publish directory: `.next`
+
+### Environment Variables on Netlify
+
+- Add `NEXT_PUBLIC_SITE_URL` (your production URL)
+- Add `MONGODB_URI` (only if using MongoDB)
+
+### CMS + Identity
+
+Decap CMS and the private admin dashboard are designed for **Netlify Identity + Git Gateway**.
+
+Follow the deployment checklist:
+
+- `DEPLOYMENT_CHECKLIST.md`
+- `ADMIN_SYSTEM_GUIDE.md`
+
+---
+
+## Google News / Publisher Center
+
+Technical readiness (schema + sitemaps) is implemented.
+
+What remains is mostly **Publisher Center workflow + publishing cadence**:
+
+- Submit `https://tech-knowlogia.com/news-sitemap.xml` in Search Console
+- Keep publishing consistently (Google News strongly favors regular fresh content)
+- Complete Publisher Center setup when the “Google News” product becomes available for your account
+
+See `GOOGLE_NEWS_ASSESSMENT.md` for the full audit and recommendations.
+
+---
+
+## Project Structure (High-Level)
+
+```text
+app/                 Next.js App Router pages + route handlers
+app/api/             Backend API endpoints
+app/[category]/      Category pages
+app/[category]/[slug]/  Article pages
+components/          UI + layout + feature components
+content/             MDX posts (by category)
+lib/                 MDX utilities, categories, auth, MongoDB connector
+models/              Mongoose models
+public/admin/         Decap CMS config + preview
+```
+
+---
+
+## Documentation Index
+
+- `DEVELOPMENT_GUIDE.md` – deep dev guide (architecture, workflows)
+- `DEPLOYMENT_CHECKLIST.md` – production rollout checklist
+- `ADMIN_SYSTEM_GUIDE.md` – admin dashboard setup + roles
+- `SECURITY_ARCHITECTURE.md` – layered security model
+- `PUBLISHER_FEATURES.md` – publisher-grade features walkthrough
+- `MONGODB_SETUP.md` – MongoDB Atlas setup + verification
+- `GOOGLE_NEWS_ASSESSMENT.md` – Google News readiness audit
+
+---
+
+## Notes / Known Limitations (By Design)
+
+- `/api/views` uses **in-memory storage** (non-persistent). For production analytics, swap to MongoDB/Redis/Postgres.
+- `/api/subscribe` is a **stub** until an email provider is wired (Resend/SendGrid/Mailchimp/etc.).
+- `/api/ai-draft` is **template-based** until a real model provider is integrated.
+- `/api/notify` is a **placeholder** until push/email integrations are configured.
+
+---
+
+## Roadmap (Recommended Production Upgrades)
+
+This repo is already production-deployable; the items below are the highest-impact upgrades when you’re ready.
+
+### Priority 1 — Data Persistence
+
+- Persist analytics from `/api/views` (replace in-memory store with MongoDB/Redis/Postgres).
+- Store newsletter subscribers from `/api/subscribe` (instead of console logging).
+
+### Priority 2 — Real AI Drafts
+
+- Upgrade `/api/ai-draft` to use a real model provider (e.g., OpenAI / Gemini / Claude) with API keys stored in Netlify environment variables.
+- Add guardrails: rate limiting, input validation, and prompt templates per category.
+
+### Priority 3 — Breaking News Delivery
+
+- Wire `/api/notify` to a notification provider (OneSignal / email provider) and connect it to “breaking” content workflows.
+
+### Priority 4 — Security Hardening
+
+- Implement server-side auth for admin-only API routes (see `SECURITY_ARCHITECTURE.md` and `ADMIN_SYSTEM_GUIDE.md`).
+
+---
+
+## Maintainers
+
+- Owner/Maintainer: @lavish112000
+
+---
+
+## Support
+
+- For bugs, requests, or documentation changes: open a GitHub issue in this repository.
+- For deployment issues: check `DEPLOYMENT_CHECKLIST.md` first (most fixes are configuration-related).
+
+---
+
+## Contributing
+
+- Keep changes focused and consistent with the existing design system and patterns.
+- Prefer small PRs with clear descriptions.
+- If adding integrations (email/AI/notifications), document new environment variables in this README.
+
+---
+
+## License
+
+**Proprietary — All Rights Reserved.**
+
+This repository and its contents are proprietary to the owner/maintainer. You may not copy, modify, distribute, or use any portion of this codebase except with explicit written permission.
+
+If you need permission (commercial use, redistribution, or contributions outside the core team), open an issue in this repository to request access/terms.
+
+---
+
+## Scripts
+
+```bash
+npm run dev     # starts Next dev server on 127.0.0.1:8080
+npm run build   # production build
+npm run start   # starts prod server on :8080
+npm run lint    # eslint
+```
