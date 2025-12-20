@@ -550,4 +550,3 @@ public/images/
 ---
 
 *Tech-Knowlogia — Delivering professional, research-backed content across technology, lifestyle, design, and business domains.*
-
