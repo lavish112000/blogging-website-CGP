@@ -107,11 +107,10 @@ export default function RootLayout({
           }}
         />
         {/* Google AdSense */}
-        <Script
+        <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4704600108238951"
           crossOrigin="anonymous"
-          strategy="afterInteractive"
         />
 
         {/* Netlify Identity (needed for password recovery links) */}
