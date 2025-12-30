@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
+import { headers } from "next/headers";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { CookieConsent } from "@/components/layout/CookieConsent";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -78,16 +80,48 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const requestHeaders = await headers();
+  const pathname = requestHeaders.get("x-pathname") ?? "";
+  const isAdminRoute =
+    pathname === "/admin" ||
+    pathname.startsWith("/admin/") ||
+    pathname === "/admin-dashboard" ||
+    pathname.startsWith("/admin-dashboard/");
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Google AdSense Meta Tag */}
         <meta name="google-adsense-account" content="ca-pub-4704600108238951" />
+        {/* Google Consent Mode (default: denied unless user accepts) */}
+        <Script
+          id="google-consent-default"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+
+              (function() {
+                var stored = null;
+                try { stored = window.localStorage.getItem('tk_cookie_consent'); } catch (e) {}
+
+                var granted = stored === 'granted';
+                gtag('consent', 'default', {
+                  ad_storage: granted ? 'granted' : 'denied',
+                  analytics_storage: granted ? 'granted' : 'denied',
+                  ad_user_data: granted ? 'granted' : 'denied',
+                  ad_personalization: granted ? 'granted' : 'denied'
+                });
+              })();
+            `,
+          }}
+        />
         {/* Google Analytics */}
         <Script
           async
@@ -99,19 +133,19 @@ export default function RootLayout({
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', 'G-BFS1TSH6FK');
             `,
           }}
         />
-        {/* Google AdSense */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4704600108238951"
-          crossOrigin="anonymous"
-        />
+        {/* Google AdSense (avoid loading on admin routes) */}
+        {!isAdminRoute && (
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4704600108238951"
+            crossOrigin="anonymous"
+          />
+        )}
 
         {/* Netlify Identity (needed for password recovery links) */}
         <Script
@@ -132,6 +166,7 @@ export default function RootLayout({
               <main className="flex-1">{children}</main>
               <Footer />
             </div>
+            <CookieConsent />
             <Analytics />
             <SpeedInsights />
           </ThemeProvider>
