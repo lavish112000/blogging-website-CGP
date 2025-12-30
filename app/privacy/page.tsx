@@ -32,12 +32,32 @@ export default function PrivacyPage() {
         <section>
           <h2 className="text-2xl font-semibold mb-4">3. Information Sharing</h2>
           <p className="text-muted-foreground">
-            We do not share your personal information with companies, organizations, or individuals outside of our company except in the following cases: with your consent, for legal reasons, or to protect rights and safety.
+            We do not sell your personal information. We may share limited information with service providers that help us operate the site (for example, analytics and advertising partners) and as required for legal reasons or to protect rights and safety.
           </p>
         </section>
 
         <section>
-          <h2 className="text-2xl font-semibold mb-4">4. Security</h2>
+          <h2 className="text-2xl font-semibold mb-4">4. Cookies, Analytics, and Advertising</h2>
+          <p className="text-muted-foreground">
+            We may use cookies and similar technologies to understand how visitors use our site, improve performance, and support advertising.
+          </p>
+          <p className="text-muted-foreground">
+            We use Google services such as Google Analytics and Google AdSense. These services may collect information such as your IP address, device and browser information, and interactions with pages and ads. Google and other third parties may place and read cookies on your browser or use web beacons/identifiers to collect information as a result of ad serving and analytics measurement.
+          </p>
+          <p className="text-muted-foreground">
+            Learn more about how Google uses data: <a href="https://policies.google.com/technologies/partner-sites" rel="noreferrer noopener" target="_blank">How Google uses data when you use our partners’ sites or apps</a>.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-semibold mb-4">5. Your Choices</h2>
+          <p className="text-muted-foreground">
+            You can control non-essential cookies through the consent prompt on our site (where available). You can also manage cookies in your browser settings.
+          </p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-semibold mb-4">6. Security</h2>
           <p className="text-muted-foreground">
             We work hard to protect our users from unauthorized access to or unauthorized alteration, disclosure, or destruction of information we hold.
           </p>
