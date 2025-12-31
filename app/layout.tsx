@@ -98,6 +98,8 @@ export default async function RootLayout({
       <head>
         {/* Google AdSense Meta Tag */}
         <meta name="google-adsense-account" content="ca-pub-4704600108238951" />
+      </head>
+      <body className={`${inter.variable} font-sans antialiased`}>
         {/* Google Consent Mode (default: denied unless user accepts) */}
         <Script
           id="google-consent-default"
@@ -108,8 +110,25 @@ export default async function RootLayout({
               function gtag(){dataLayer.push(arguments);}
 
               (function() {
+                function readCookie(name) {
+                  try {
+                    var parts = document.cookie.split(';');
+                    for (var i = 0; i < parts.length; i++) {
+                      var kv = parts[i].trim().split('=');
+                      var key = decodeURIComponent(kv[0] || '');
+                      if (key === name) {
+                        return decodeURIComponent(kv.slice(1).join('='));
+                      }
+                    }
+                  } catch (e) {}
+                  return null;
+                }
+
                 var stored = null;
                 try { stored = window.localStorage.getItem('tk_cookie_consent'); } catch (e) {}
+                if (stored !== 'granted' && stored !== 'denied') {
+                  stored = readCookie('tk_cookie_consent');
+                }
 
                 var granted = stored === 'granted';
                 gtag('consent', 'default', {
@@ -140,10 +159,11 @@ export default async function RootLayout({
         />
         {/* Google AdSense (avoid loading on admin routes) */}
         {!isAdminRoute && (
-          <script
+          <Script
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4704600108238951"
             crossOrigin="anonymous"
+            strategy="afterInteractive"
           />
         )}
 
@@ -152,8 +172,6 @@ export default async function RootLayout({
           src="https://identity.netlify.com/v1/netlify-identity-widget.js"
           strategy="afterInteractive"
         />
-      </head>
-      <body className={`${inter.variable} font-sans antialiased`}>
         <AuthProvider>
           <ThemeProvider
             attribute="class"
