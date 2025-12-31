@@ -13,6 +13,69 @@ const md = new MarkdownIt({
 
 const contentDirectory = path.join(process.cwd(), 'content')
 
+function normalizeEncodingArtifacts(input: string): string {
+  return input
+    // Common UTF-8/Windows-1252 mojibake
+    .replaceAll('â€œ', '“')
+    .replaceAll('â€', '”')
+    .replaceAll('â€˜', '‘')
+    .replaceAll('â€™', '’')
+    .replaceAll('â€”', '—')
+    .replaceAll('â€“', '–')
+    .replaceAll('â€¦', '…')
+    .replaceAll('â€¢', '•')
+    .replaceAll('â†’', '→')
+    // Double-mojibake variants seen in content
+    .replaceAll('€œ', '“')
+    .replaceAll('€\u009d', '”')
+    .replaceAll('€\u009c', '“')
+    .replaceAll('€', '”')
+    .replaceAll('€˜', '‘')
+    .replaceAll('€™', '’')
+    .replaceAll('€”', '—')
+    .replaceAll('€“', '–')
+    // Arrow artifacts used in headings/TOCs
+    .replaceAll('†’', '→')
+    // Stray non-breaking-space marker
+    .replaceAll('Â', '')
+}
+
+function normalizeDeep<T>(value: T): T {
+  if (typeof value === 'string') {
+    return normalizeEncodingArtifacts(value) as T
+  }
+
+  if (Array.isArray(value)) {
+    return value.map(v => normalizeDeep(v)) as T
+  }
+
+  if (value && typeof value === 'object') {
+    const result: Record<string, unknown> = {}
+    for (const [key, val] of Object.entries(value as Record<string, unknown>)) {
+      result[key] = normalizeDeep(val)
+    }
+    return result as T
+  }
+
+  return value
+}
+
+function stripEditorialBlocks(input: string): string {
+  // These sections were scaffolding notes for adding real photos later.
+  // They should never render on the site.
+  return input
+    .replace(
+      /^##\s+Image placement instructions\b[^\n]*\n[\s\S]*?(?=^##\s+|\Z)/gmi,
+      ''
+    )
+    .replace(
+      /^##\s+Image guidance\b[^\n]*\n[\s\S]*?(?=^##\s+|\Z)/gmi,
+      ''
+    )
+    // Collapse accidental extra whitespace left behind
+    .replace(/\n{3,}/g, '\n\n')
+}
+
 /**
  * Get all posts from a specific category
  */
@@ -48,9 +111,11 @@ export async function getPostBySlug(slug: string, category: Category): Promise<P
     const fileContent = fs.readFileSync(filePath, 'utf8')
     const { data, content } = matter(fileContent)
     
-    const frontmatter = data as PostFrontmatter
-    const readTime = calculateReadingTime(content)
-    const htmlContent = md.render(content)
+    const frontmatter = normalizeDeep(data) as PostFrontmatter
+    const normalizedContent = normalizeEncodingArtifacts(content)
+    const cleanedContent = stripEditorialBlocks(normalizedContent)
+    const readTime = calculateReadingTime(cleanedContent)
+    const htmlContent = md.render(cleanedContent)
 
     const priority = typeof frontmatter.priority === 'number' ? frontmatter.priority : undefined
     const breaking = frontmatter.breaking === true
