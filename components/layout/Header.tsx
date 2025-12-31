@@ -48,6 +48,13 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
+            <Link
+              href="/"
+              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors relative group"
+            >
+              Home
+              <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left" />
+            </Link>
             {CATEGORIES.map((category) => (
               <Link
                 key={category.slug}
@@ -123,6 +130,13 @@ export function Header() {
         {isMenuOpen && (
           <div className="md:hidden border-t border-gray-200 dark:border-gray-800">
             <div className="py-4 space-y-4">
+              <Link
+                href="/"
+                className="block px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Home
+              </Link>
               {CATEGORIES.map((category) => (
                 <Link
                   key={category.slug}
