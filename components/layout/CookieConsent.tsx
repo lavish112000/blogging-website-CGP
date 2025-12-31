@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { usePathname } from 'next/navigation'
 
 const STORAGE_KEY = 'tk_cookie_consent'
+const COOKIE_KEY = STORAGE_KEY
 
 type ConsentState = 'granted' | 'denied'
 
@@ -25,16 +26,53 @@ function updateGoogleConsent(state: ConsentState) {
   })
 }
 
+function readCookie(name: string): string | null {
+  if (typeof document === 'undefined') return null
+  const entries = document.cookie.split(';')
+  for (const entry of entries) {
+    const [rawKey, ...rawVal] = entry.trim().split('=')
+    if (!rawKey) continue
+    if (decodeURIComponent(rawKey) !== name) continue
+    return decodeURIComponent(rawVal.join('='))
+  }
+  return null
+}
+
+function readStoredConsent(): ConsentState | null {
+  if (typeof window === 'undefined') return null
+
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY)
+    if (stored === 'granted' || stored === 'denied') return stored
+  } catch {
+    // Ignore
+  }
+
+  const cookieVal = readCookie(COOKIE_KEY)
+  return cookieVal === 'granted' || cookieVal === 'denied' ? cookieVal : null
+}
+
+function persistConsent(choice: ConsentState) {
+  if (typeof window !== 'undefined') {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, choice)
+    } catch {
+      // Ignore
+    }
+  }
+
+  if (typeof document !== 'undefined') {
+    // 1 year persistence, first-party cookie.
+    document.cookie = `${encodeURIComponent(COOKIE_KEY)}=${encodeURIComponent(
+      choice
+    )}; Max-Age=31536000; Path=/; SameSite=Lax`
+  }
+}
+
 export function CookieConsent() {
   const pathname = usePathname()
-  const [consent, setConsent] = useState<ConsentState | null>(() => {
-    try {
-      const stored = window.localStorage.getItem(STORAGE_KEY)
-      return stored === 'granted' || stored === 'denied' ? stored : null
-    } catch {
-      return null
-    }
-  })
+  const [consent, setConsent] = useState<ConsentState | null>(null)
+  const [hydrated, setHydrated] = useState(false)
 
   const isAdminRoute = useMemo(() => {
     if (!pathname) return false
@@ -47,19 +85,20 @@ export function CookieConsent() {
   }, [pathname])
 
   useEffect(() => {
+    setHydrated(true)
+    setConsent(readStoredConsent())
+  }, [])
+
+  useEffect(() => {
     if (isAdminRoute) return
     if (!consent) return
     updateGoogleConsent(consent)
   }, [consent, isAdminRoute])
 
-  if (isAdminRoute || consent) return null
+  if (!hydrated || isAdminRoute || consent) return null
 
   const onChoice = (choice: ConsentState) => {
-    try {
-      window.localStorage.setItem(STORAGE_KEY, choice)
-    } catch {
-      // Ignore
-    }
+    persistConsent(choice)
 
     updateGoogleConsent(choice)
     setConsent(choice)
