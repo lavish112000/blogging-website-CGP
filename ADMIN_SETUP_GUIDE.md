@@ -1,5 +1,7 @@
 # 🏗️ Tech-Knowlogia Admin Dashboard Setup Guide
 
+**Last updated:** 2025-12-31
+
 ## 📁 Architecture Complete
 
 ```
@@ -60,12 +62,14 @@ public/
 
 ## 🎯 ACCESS YOUR CMS
 
-**CMS URL:** `https://tech-knowlogia.netlify.app/admin`
+**CMS URL:** `https://<your-site-domain>/admin`
 
 1. Visit the URL
 2. Click **"Login with Netlify Identity"**
 3. Enter your credentials
 4. Start creating/editing articles!
+
+Tip: The private Admin Dashboard lives at `https://<your-site-domain>/admin-dashboard` and uses the same Netlify Identity login.
 
 ---
 
@@ -73,7 +77,7 @@ public/
 
 ### Creating a New Article
 
-1. **Login to CMS:** `https://tech-knowlogia.netlify.app/admin`
+1. **Login to CMS:** `https://<your-site-domain>/admin`
 2. **Select Category:** Technology / Business / Design / Lifestyle / Blog
 3. **Click "New [Category]"**
 4. **Fill in fields:**
@@ -145,7 +149,7 @@ public/
 
 ## 🎨 YOUR WORKFLOW
 
-1. **Visit:** `https://tech-knowlogia.netlify.app/admin`
+1. **Visit:** `https://<your-site-domain>/admin`
 2. **Create article** in any category
 3. **Add images** via media library
 4. **Set priority/featured** for homepage prominence
@@ -191,7 +195,7 @@ public/
 1. **Deploy to Netlify** (if not done)
 2. **Enable Identity + Git Gateway**
 3. **Invite yourself as admin**
-4. **Login at:** `https://tech-knowlogia.netlify.app/admin`
+4. **Login at:** `https://<your-site-domain>/admin`
 5. **Start publishing!**
 
 ---
@@ -207,6 +211,17 @@ public/
 
 - Enable Netlify Identity in dashboard
 - Check if you've been invited as user
+
+### Admin Dashboard redirects you to Home
+
+- Your user is not logged in, or does not have the `admin` role.
+- Log in via the site header **Login** button (user icon) or via `/admin`.
+- Confirm `admin` role is assigned in Netlify Identity.
+
+### Local development note
+
+- Netlify Identity endpoints are available on Netlify deploys.
+- For local Identity testing, use `netlify dev` (Netlify CLI), or test on a deployed Netlify URL.
 
 ### Can't save articles
 
