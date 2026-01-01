@@ -2,6 +2,8 @@
 
 Tech-Knowlogia is a modern, SEO-first blogging platform built with **Next.js App Router**. It ships with publisher-grade tooling: MDX content workflow, Decap CMS editor, a private admin dashboard, RSS + sitemaps (including **Google News** sitemap), and optional MongoDB storage.
 
+**Last updated:** 2025-12-31
+
 ---
 
 ## Quick Links (Production)
@@ -100,11 +102,7 @@ npm install
 
 Create `.env.local` in the project root.
 
-Minimum recommended:
-
-```bash
-NEXT_PUBLIC_SITE_URL=http://localhost:8080
-```
+This project intentionally keeps secrets out of the repository. Do **not** commit `.env.local`.
 
 If you want MongoDB features enabled:
 
@@ -115,34 +113,35 @@ MONGODB_URI=mongodb+srv://<user>:<pass>@<cluster>/<db>?retryWrites=true&w=majori
 Optional (if you use them):
 
 ```bash
-NEXT_PUBLIC_GA_ID=
-NEXT_PUBLIC_ADSENSE_CLIENT_ID=
-
-# Optional integrations (used by /api/notify GET status)
+# Optional integrations (used by /api/notify, /api/subscribe stubs)
 ONESIGNAL_API_KEY=
 ONESIGNAL_APP_ID=
 RESEND_API_KEY=
 ```
 
+Notes:
+- The production domain is currently hard-coded as `https://tech-knowlogia.com` in several routes (sitemap, RSS, metadata). If you deploy under a different domain, update those constants.
+- Netlify Identity auth (Admin/CMS login) works best when running on Netlify. For local auth testing, use `netlify dev` (requires Netlify CLI).
+
 ### Run Dev Server
 
-This repo is configured to run on **port 8080**.
+Default Next.js dev port is **3000** (unless you override it).
 
 ```bash
 npm run dev
 ```
 
-Open [http://localhost:8080](http://localhost:8080)
+Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
 ## Key URLs (Local)
 
-- Home: [http://localhost:8080](http://localhost:8080)
-- RSS: [http://localhost:8080/feed.xml](http://localhost:8080/feed.xml)
-- Sitemap: [http://localhost:8080/sitemap.xml](http://localhost:8080/sitemap.xml)
-- News sitemap: [http://localhost:8080/news-sitemap.xml](http://localhost:8080/news-sitemap.xml)
-- MongoDB test: [http://localhost:8080/api/test-db](http://localhost:8080/api/test-db)
+- Home: [http://localhost:3000](http://localhost:3000)
+- RSS: [http://localhost:3000/feed.xml](http://localhost:3000/feed.xml)
+- Sitemap: [http://localhost:3000/sitemap.xml](http://localhost:3000/sitemap.xml)
+- News sitemap: [http://localhost:3000/news-sitemap.xml](http://localhost:3000/news-sitemap.xml)
+- MongoDB test: [http://localhost:3000/api/test-db](http://localhost:3000/api/test-db)
 
 ---
 
