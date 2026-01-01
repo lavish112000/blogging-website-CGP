@@ -4,6 +4,8 @@
 
 **Complete security architecture, setup instructions, and usage guide**
 
+**Last updated:** 2025-12-31
+
 ---
 
 ## 📋 TABLE OF CONTENTS
@@ -93,9 +95,9 @@ The admin dashboard uses **layered security**:
 
 ### Layer 5: UI Protection
 
-- **Location:** Entire public site
-- **Mechanism:** No navigation links to admin
-- **Action:** Admin dashboard invisible to users
+- **Location:** Public header/navigation
+- **Mechanism:** Admin Dashboard shortcut only renders for logged-in `admin` users
+- **Action:** Public users don’t see admin navigation; admins can access quickly
 
 ---
 
@@ -158,9 +160,14 @@ The admin dashboard uses **layered security**:
    - Verify you see all categories and editorial workflow
 
 2. **Test Admin Dashboard:**
-   - Navigate to `https://yoursite.netlify.app/admin-dashboard`
-   - Should see dashboard (if admin role assigned)
-   - Should redirect to home (if not admin)
+
+- Navigate to `https://<your-site-domain>/admin-dashboard`
+- Should see dashboard (if admin role assigned)
+- Should redirect to home (if not admin)
+
+Recommended flow:
+
+- Open the site → click **Login** (user icon in header) → sign in via Netlify Identity → open `/admin-dashboard`.
 
 ---
 
