@@ -1,5 +1,7 @@
 # MongoDB Integration - Setup Verification ✅
 
+**Last updated:** 2025-12-31
+
 ## 🎯 Implementation Status
 
 ### ✅ Step 1: Dependencies Installed
@@ -45,10 +47,10 @@
 
 ## 🧪 Testing Instructions
 
-### Test Locally:
+### Test Locally
 
 1. Make sure your dev server is running: `npm run dev`
-2. Visit: **http://localhost:8080/api/test-db**
+2. Visit: **<http://localhost:8080/api/test-db>**
 3. You should see:
 
    ```json
@@ -60,9 +62,10 @@
    }
    ```
 
-### If Connection Fails:
+### If Connection Fails
 
 Check that you've completed these MongoDB Atlas steps:
+
 1. ✅ Database user created (visible in screenshot)
 2. ⚠️ **Add IP `0.0.0.0/0` to Network Access**
    - Go to: **Network Access** in MongoDB Atlas
@@ -74,17 +77,21 @@ Check that you've completed these MongoDB Atlas steps:
 
 ## 🚀 Deployment to Netlify
 
-### Add Environment Variable:
+### Add Environment Variable
 
 1. Go to: **Netlify Dashboard** → Your Site → **Site Settings**
 2. Navigate to: **Environment Variables**
 3. Add variable:
    - **Key:** `MONGODB_URI`
-   - **Value:** 
+   - **Value:**
 
      ```
-     mongodb+srv://lalitchoudhary112000_db_user:F4bYhkj1oIhXUoso@cluster0.mongodb.net/myblogdb?retryWrites=true&w=majority
+     mongodb+srv://<db_user>:<db_password>@<cluster_host>/<db_name>?retryWrites=true&w=majority
      ```
+
+     Notes:
+     - Never paste real credentials into docs or commits.
+     - If this repository ever contained real MongoDB credentials, rotate that database user password immediately in MongoDB Atlas.
 
 4. Click **Save**
 5. Redeploy your site
@@ -101,7 +108,7 @@ Check that you've completed these MongoDB Atlas steps:
 - **Cost:** $0/month forever
 - **Ideal for:** Development, small sites (up to ~10k monthly users)
 
-### When to Upgrade:
+### When to Upgrade
 
 - **If you exceed 512MB data:** Upgrade to M2 ($9/month)
 - **For production with backups:** Upgrade to M10 ($57/month)
@@ -113,7 +120,7 @@ Check that you've completed these MongoDB Atlas steps:
 
 ## 📝 Usage Example
 
-### Create a Contact Form Handler:
+### Create a Contact Form Handler
 
 ```typescript
 // app/api/contact/route.ts
@@ -158,7 +165,7 @@ export async function POST(request: Request) {
 - [x] Test API route created (`app/api/test-db/route.ts`)
 - [x] Environment variable set locally (`.env.local`)
 - [x] Development server running
-- [ ] **TODO:** Test connection at http://localhost:8080/api/test-db
+- [ ] **TODO:** Test connection at <http://localhost:8080/api/test-db>
 - [ ] **TODO:** Add IP 0.0.0.0/0 to MongoDB Atlas Network Access
 - [ ] **TODO:** Add MONGODB_URI to Netlify environment variables
 - [ ] **TODO:** Deploy and test in production
