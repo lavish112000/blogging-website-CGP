@@ -2,69 +2,93 @@
 
 ## Instant Access Guide for Tech-Knowlogia Admin
 
+**Last updated:** 2025-12-31
+
 ---
 
 ## 🔑 LOGIN
 
-**URL:** `https://tech-knowlogia.com/admin-dashboard`
+**Admin Dashboard URL:** `/admin-dashboard`
+
+**How to log in (recommended):**
+
+1. Open the site
+2. Click **Login** (user icon) in the top navigation
+3. Sign in via **Netlify Identity**
+4. If your account has the `admin` role, an **Admin Dashboard** icon/link becomes available
+
+**Alternative login path:**
+
+- You can also log in via the CMS at `/admin` (Decap CMS) and then navigate to `/admin-dashboard`.
 
 **Requirements:**
-- Netlify Identity account
-- Admin role assigned
-- Logged in (via Netlify Identity widget)
 
-**Not Working?**
-1. Go to `/admin` first (CMS login)
-2. Login with Netlify Identity
-3. Then navigate to `/admin-dashboard`
+- Netlify Identity enabled for the deployed site
+- Your user has the `admin` role (Netlify Identity → User metadata)
+
+**If you get redirected to Home:**
+
+- You are either not logged in, or your user does not have the `admin` role.
 
 ---
 
 ## 📊 DASHBOARD OVERVIEW
 
 ### Main Dashboard (`/admin-dashboard`)
+
 **Purpose:** Site health overview  
 **Quick Actions:**
+
 - View total articles, views, drafts
 - See top performing content
 - Monitor recent activity
 - Quick links to all tools
 
 ### Analytics (`/analytics`)
+
 **Purpose:** Track article performance  
 **Quick Actions:**
+
 - View all article view counts
 - Identify trending content
 - Export data (coming soon)
 - Refresh for real-time stats
 
 ### Trending Controls (`/trending`)
+
 **Purpose:** Manage featured content  
 **Quick Actions:**
+
 - Toggle featured status
 - Set priority (1-10)
 - Reorder homepage articles
 - Save changes instantly
 
 ### Breaking News (`/breaking-news`)
+
 **Purpose:** Manage urgent content  
 **Quick Actions:**
+
 - Mark articles as breaking
 - Send push notifications
 - Remove breaking status
 - View active breaking news
 
 ### AI Drafts (`/ai-drafts`)
+
 **Purpose:** Generate article drafts  
 **Quick Actions:**
+
 - Enter topic + category
 - Choose template style
 - Generate draft
 - Copy to CMS
 
 ### Settings (`/settings`)
+
 **Purpose:** Site configuration  
 **Quick Actions:**
+
 - Update site metadata
 - Toggle features
 - Manage integrations
@@ -75,6 +99,7 @@
 ## ⚡ COMMON TASKS
 
 ### Task 1: Publish Breaking News
+
 1. Write article in CMS (`/admin`)
 2. Set `breaking: true` in frontmatter
 3. Go to `/admin-dashboard/breaking-news`
@@ -82,6 +107,7 @@
 5. Done! Subscribers notified
 
 ### Task 2: Feature an Article
+
 1. Go to `/admin-dashboard/trending`
 2. Find article in list
 3. Click "Feature" toggle
@@ -89,12 +115,14 @@
 5. Click "Save Changes"
 
 ### Task 3: Check Article Performance
+
 1. Go to `/admin-dashboard/analytics`
 2. View top 20 articles by views
 3. Click "Refresh" for latest data
 4. Optimize low-performing content
 
 ### Task 4: Generate AI Draft
+
 1. Go to `/admin-dashboard/ai-drafts`
 2. Enter topic (e.g., "Web3 Security")
 3. Select category and template
@@ -104,6 +132,7 @@
 7. Customize and publish
 
 ### Task 5: Update Site Settings
+
 1. Go to `/admin-dashboard/settings`
 2. Modify settings (name, tagline, etc.)
 3. Toggle features on/off
@@ -115,17 +144,20 @@
 ## 🚨 SECURITY REMINDERS
 
 ✅ **Admin dashboard is PRIVATE**
+
 - Not visible to public users
 - Not visible to editors
 - Not indexed by Google
 - No public links
 
 ✅ **Role Requirements**
+
 - Must have `admin` role
 - Editors cannot access
 - Auto-redirects unauthorized users
 
 ✅ **Best Practices**
+
 - Never share admin credentials
 - Use strong password
 - Log out on shared devices
@@ -136,6 +168,7 @@
 ## 🆘 TROUBLESHOOTING
 
 ### Can't Access Dashboard?
+
 ```
 1. Clear browser cache
 2. Go to /admin and login
@@ -145,6 +178,7 @@
 ```
 
 ### Analytics Not Updating?
+
 ```
 1. Click "Refresh" button
 2. Check ViewTracker in article pages
@@ -153,6 +187,7 @@
 ```
 
 ### Notifications Not Sending?
+
 ```
 1. Currently placeholder (console.log only)
 2. Integrate OneSignal/Resend in production
@@ -160,6 +195,7 @@
 ```
 
 ### AI Drafts Too Generic?
+
 ```
 1. Currently template-based (placeholder)
 2. Integrate OpenAI/Gemini for production
@@ -174,6 +210,7 @@
 **Optimized for mobile:** ✅ Yes
 
 **Recommended workflow:**
+
 - Desktop: Full admin dashboard
 - Mobile: CMS editing (`/admin`)
 - Tablet: Both work great
@@ -182,9 +219,9 @@
 
 ## 🔗 IMPORTANT LINKS
 
-- **Public Site:** https://tech-knowlogia.com
-- **CMS (Decap):** https://tech-knowlogia.com/admin
-- **Admin Dashboard:** https://tech-knowlogia.com/admin-dashboard
+- **Public Site:** <https://tech-knowlogia.com>
+- **CMS (Decap):** <https://tech-knowlogia.com/admin>
+- **Admin Dashboard:** <https://tech-knowlogia.com/admin-dashboard>
 - **Full Guide:** `/ADMIN_SYSTEM_GUIDE.md`
 - **Features Doc:** `/PUBLISHER_FEATURES.md`
 
@@ -193,13 +230,13 @@
 ## 📞 SUPPORT
 
 **Need Help?**
+
 1. Read: `ADMIN_SYSTEM_GUIDE.md` (comprehensive)
 2. Check: Netlify dashboard → Identity → Users
 3. Debug: Browser console → Check auth state
-4. Email: admin@tech-knowlogia.com (if issues persist)
+4. Email: support@<your-domain> (if issues persist)
 
 ---
 
-**Quick Reference Version:** 1.0  
-**Last Updated:** December 2024  
-**Status:** ✅ Operational
+**Quick Reference Version:** 1.1
+**Status:** ✅ Operational (requires Netlify Identity + admin role)
