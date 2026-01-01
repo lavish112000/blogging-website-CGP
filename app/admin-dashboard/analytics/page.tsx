@@ -31,7 +31,9 @@ async function getIdentityAccessToken(): Promise<string | null> {
 
     // More reliable: Netlify Identity user objects typically expose a jwt() helper.
     if (typeof user?.jwt === 'function') {
-      const jwt = await user.jwt()
+      // Force refresh because access tokens expire ~hourly.
+      // If refresh fails, fall back to any existing token.
+      const jwt = await user.jwt(true)
       if (typeof jwt === 'string' && jwt.length > 0) return jwt
     }
 
