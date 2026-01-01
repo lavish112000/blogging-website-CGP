@@ -22,11 +22,20 @@ type Ga4ApiResponse =
   | { configured: true; summary: Ga4Summary }
   | { error: string; reason?: string }
 
-function getIdentityAccessToken(): string | null {
+async function getIdentityAccessToken(): Promise<string | null> {
   try {
     const identity = (window as any)?.netlifyIdentity
     const user = identity?.currentUser?.()
-    return user?.token?.access_token || null
+    const direct = user?.token?.access_token
+    if (direct) return direct
+
+    // More reliable: Netlify Identity user objects typically expose a jwt() helper.
+    if (typeof user?.jwt === 'function') {
+      const jwt = await user.jwt()
+      if (typeof jwt === 'string' && jwt.length > 0) return jwt
+    }
+
+    return null
   } catch {
     return null
   }
@@ -51,7 +60,7 @@ export default function AnalyticsPage() {
     setLoading(true)
     setError(null)
     try {
-      const token = getIdentityAccessToken()
+      const token = await getIdentityAccessToken()
       const response = await fetch(`/api/admin/ga4?range=${range}`, {
         headers: token ? { authorization: `Bearer ${token}` } : undefined,
       })
@@ -59,7 +68,8 @@ export default function AnalyticsPage() {
       const data = (await response.json()) as Ga4ApiResponse
       if (!response.ok) {
         setGa(data)
-        setError('Failed to load GA4 analytics (unauthorized or misconfigured).')
+        const reason = 'reason' in data && data.reason ? ` (${data.reason})` : ''
+        setError(`Failed to load GA4 analytics${reason}.`)
         return
       }
 
