@@ -3,10 +3,33 @@
 import { useState, useEffect } from 'react'
 import { TrendingUp, Eye, BarChart3, RefreshCw } from 'lucide-react'
 
-interface AnalyticsData {
-  views: Record<string, number>
-  total: number
-  articles: number
+type Ga4TopPageRow = {
+  path: string
+  views: number
+  users: number
+}
+
+type Ga4Summary = {
+  range: '7d' | '30d'
+  totalViews: number
+  totalUsers: number
+  topPages: Ga4TopPageRow[]
+  lastUpdated: string
+}
+
+type Ga4ApiResponse =
+  | { configured: false }
+  | { configured: true; summary: Ga4Summary }
+  | { error: string; reason?: string }
+
+function getIdentityAccessToken(): string | null {
+  try {
+    const identity = (window as any)?.netlifyIdentity
+    const user = identity?.currentUser?.()
+    return user?.token?.access_token || null
+  } catch {
+    return null
+  }
 }
 
 /**
@@ -15,21 +38,35 @@ interface AnalyticsData {
  * ADMIN ONLY - Protected by layout
  */
 export default function AnalyticsPage() {
-  const [analytics, setAnalytics] = useState<AnalyticsData | null>(null)
+  const [ga, setGa] = useState<Ga4ApiResponse | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [range, setRange] = useState<'7d' | '30d'>('30d')
 
   useEffect(() => {
     loadAnalytics()
-  }, [])
+  }, [range])
 
   const loadAnalytics = async () => {
     setLoading(true)
+    setError(null)
     try {
-      const response = await fetch('/api/views')
-      const data = await response.json()
-      setAnalytics(data)
+      const token = getIdentityAccessToken()
+      const response = await fetch(`/api/admin/ga4?range=${range}`, {
+        headers: token ? { authorization: `Bearer ${token}` } : undefined,
+      })
+
+      const data = (await response.json()) as Ga4ApiResponse
+      if (!response.ok) {
+        setGa(data)
+        setError('Failed to load GA4 analytics (unauthorized or misconfigured).')
+        return
+      }
+
+      setGa(data)
     } catch (error) {
       console.error('Failed to load analytics:', error)
+      setError('Failed to load analytics.')
     } finally {
       setLoading(false)
     }
@@ -46,11 +83,9 @@ export default function AnalyticsPage() {
     )
   }
 
-  const topArticles = analytics?.views
-    ? Object.entries(analytics.views)
-        .sort(([, a], [, b]) => b - a)
-        .slice(0, 20)
-    : []
+  const configured = ga && 'configured' in ga ? ga.configured : false
+  const summary = ga && 'summary' in ga ? ga.summary : null
+  const topPages = summary?.topPages || []
 
   return (
     <div className="space-y-6">
@@ -62,51 +97,87 @@ export default function AnalyticsPage() {
             Track article performance and visitor engagement
           </p>
         </div>
-        <button
-          onClick={loadAnalytics}
-          className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
-        >
-          <RefreshCw className="w-4 h-4" />
-          Refresh
-        </button>
+        <div className="flex items-center gap-2">
+          <div className="flex items-center rounded-lg border bg-background p-1">
+            <button
+              type="button"
+              onClick={() => setRange('7d')}
+              className={`px-3 py-1 text-sm rounded-md transition-colors ${
+                range === '7d' ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
+              }`}
+            >
+              7d
+            </button>
+            <button
+              type="button"
+              onClick={() => setRange('30d')}
+              className={`px-3 py-1 text-sm rounded-md transition-colors ${
+                range === '30d' ? 'bg-primary text-primary-foreground' : 'hover:bg-muted'
+              }`}
+            >
+              30d
+            </button>
+          </div>
+
+          <button
+            onClick={loadAnalytics}
+            className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+          >
+            <RefreshCw className="w-4 h-4" />
+            Refresh
+          </button>
+        </div>
       </div>
 
       {/* Summary Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-lg p-6">
+        <div className="bg-linear-to-br from-blue-500 to-blue-600 text-white rounded-lg p-6">
           <div className="flex items-center gap-3 mb-2">
             <Eye className="w-6 h-6" />
             <h3 className="text-lg font-semibold">Total Views</h3>
           </div>
-          <p className="text-4xl font-bold">{analytics?.total.toLocaleString() || 0}</p>
-          <p className="text-sm opacity-90 mt-2">All-time page views</p>
+          <p className="text-4xl font-bold">{summary?.totalViews?.toLocaleString() || 0}</p>
+          <p className="text-sm opacity-90 mt-2">Last {range === '7d' ? '7' : '30'} days (GA4)</p>
         </div>
 
-        <div className="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-lg p-6">
+        <div className="bg-linear-to-br from-purple-500 to-purple-600 text-white rounded-lg p-6">
           <div className="flex items-center gap-3 mb-2">
             <BarChart3 className="w-6 h-6" />
-            <h3 className="text-lg font-semibold">Tracked Articles</h3>
+            <h3 className="text-lg font-semibold">Total Users</h3>
           </div>
-          <p className="text-4xl font-bold">{analytics?.articles || 0}</p>
-          <p className="text-sm opacity-90 mt-2">With view data</p>
+          <p className="text-4xl font-bold">{summary?.totalUsers?.toLocaleString() || 0}</p>
+          <p className="text-sm opacity-90 mt-2">Last {range === '7d' ? '7' : '30'} days (GA4)</p>
         </div>
 
-        <div className="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-lg p-6">
+        <div className="bg-linear-to-br from-green-500 to-green-600 text-white rounded-lg p-6">
           <div className="flex items-center gap-3 mb-2">
             <TrendingUp className="w-6 h-6" />
-            <h3 className="text-lg font-semibold">Avg. per Article</h3>
+            <h3 className="text-lg font-semibold">Top Pages</h3>
           </div>
-          <p className="text-4xl font-bold">
-            {analytics?.articles ? Math.round(analytics.total / analytics.articles) : 0}
-          </p>
-          <p className="text-sm opacity-90 mt-2">Average views</p>
+          <p className="text-4xl font-bold">{topPages.length}</p>
+          <p className="text-sm opacity-90 mt-2">Ranked by views</p>
         </div>
       </div>
+
+      {error && (
+        <div className="bg-destructive/10 border border-destructive/30 text-destructive rounded-lg p-4">
+          <p className="text-sm font-medium">{error}</p>
+        </div>
+      )}
+
+      {ga && 'configured' in ga && !ga.configured && (
+        <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+          <p className="text-sm text-blue-900 dark:text-blue-100">
+            <strong>GA4 not configured:</strong> Set GA4 service account credentials and property ID in the
+            environment, then redeploy.
+          </p>
+        </div>
+      )}
 
       {/* Top Articles Table */}
       <div className="bg-card border rounded-lg overflow-hidden">
         <div className="bg-muted px-6 py-4 border-b">
-          <h2 className="text-xl font-semibold">Top Performing Articles</h2>
+          <h2 className="text-xl font-semibold">Top Pages (GA4)</h2>
         </div>
         <div className="overflow-x-auto">
           <table className="w-full">
@@ -116,31 +187,27 @@ export default function AnalyticsPage() {
                   Rank
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                  Article
+                  Page Path
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Views
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                  % of Total
+                  Users
                 </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {topArticles.length === 0 ? (
+              {!configured || topPages.length === 0 ? (
                 <tr>
                   <td colSpan={4} className="px-6 py-8 text-center text-muted-foreground">
-                    No analytics data available yet. Views will appear here once articles are visited.
+                    No GA4 data available yet (or GA4 not configured).
                   </td>
                 </tr>
               ) : (
-                topArticles.map(([slug, views], index) => {
-                  const percentage = analytics?.total
-                    ? ((views / analytics.total) * 100).toFixed(1)
-                    : '0'
-                  
+                topPages.map((row, index) => {
                   return (
-                    <tr key={slug} className="hover:bg-muted/50 transition-colors">
+                    <tr key={row.path} className="hover:bg-muted/50 transition-colors">
                       <td className="px-6 py-4 whitespace-nowrap">
                         <span className="flex items-center justify-center w-8 h-8 rounded-full bg-primary/10 text-primary font-bold text-sm">
                           {index + 1}
@@ -149,20 +216,20 @@ export default function AnalyticsPage() {
                       <td className="px-6 py-4">
                         <div className="flex items-center">
                           <div>
-                            <div className="font-medium text-foreground">{slug}</div>
+                            <div className="font-medium text-foreground">{row.path}</div>
                             <div className="text-sm text-muted-foreground">
-                              /{slug.replace('/', '/')}
+                              {row.path}
                             </div>
                           </div>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right">
                         <span className="text-lg font-bold text-foreground">
-                          {views.toLocaleString()}
+                          {row.views.toLocaleString()}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right">
-                        <span className="text-sm text-muted-foreground">{percentage}%</span>
+                        <span className="text-sm text-muted-foreground">{row.users.toLocaleString()}</span>
                       </td>
                     </tr>
                   )
@@ -176,8 +243,9 @@ export default function AnalyticsPage() {
       {/* Note */}
       <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
         <p className="text-sm text-blue-900 dark:text-blue-100">
-          <strong>Note:</strong> Analytics data is currently stored in memory and resets on server restart. 
-          For production, integrate with a database (Vercel KV, PostgreSQL, or MongoDB) for persistent tracking.
+          <strong>Note:</strong> This dashboard pulls metrics from GA4 via a server-side API route.
+          For local testing, run via <code className="px-1 py-0.5 bg-blue-100/50 dark:bg-blue-900/40 rounded">netlify dev</code>
+          so Netlify Identity endpoints work.
         </p>
       </div>
     </div>
