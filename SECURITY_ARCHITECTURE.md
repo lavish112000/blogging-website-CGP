@@ -2,9 +2,13 @@
 
 ## Complete Security Implementation for Tech-Knowlogia Admin Dashboard
 
-**Status:** ✅ Production Ready  
-**Security Level:** Enterprise-Grade  
+**Last updated:** 2025-12-31
+
+**Status:** ✅ Usable in production (with known limitations)  
+**Security Level:** Good baseline (client-side gating + crawler controls)  
 **Access Control:** Role-Based (Admin Only)
+
+Important: the admin dashboard UI is protected on the client (redirect + conditional rendering). Server-side protection for admin-only APIs is still a TODO (see “API PROTECTION”).
 
 ---
 
@@ -229,17 +233,16 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 
 **Implementation:**
 
-- **NO links** to `/admin-dashboard` in public UI
-- **NO mentions** of admin system in public content
-- **NO navigation items** pointing to admin routes
-- **Separate login** (CMS at `/admin`, Dashboard at `/admin-dashboard`)
+- Public users do **not** see an Admin Dashboard link
+- After login, only `admin` users see an Admin Dashboard shortcut
+- Login/Logout is available via the top navigation (Netlify Identity widget)
+- CMS remains available at `/admin` (Decap CMS)
 
 **What it does:**
 
-- Keeps admin system completely hidden
-- No accidental exposure via UI
-- Users can't stumble upon admin dashboard
-- Only discoverable by those who know the URL
+- Avoids advertising admin routes to non-admin users
+- Makes authorized access simpler (admins can log in and navigate without manual URLs)
+- Reduces support overhead (“how do I log in?”)
 
 **Protection against:**
 
@@ -512,10 +515,9 @@ export async function GET(req: Request) {
 
 ---
 
-**Security Review Date:** December 2024  
-**Next Review:** March 2025  
-**Security Officer:** Lalit Choudhary  
-**Status:** ✅ Production Ready (with noted TODOs)
+**Security Review Date:** 2025-12-31  
+**Next Review:** 2026-03-31  
+**Status:** ✅ Usable in production (with noted TODOs)
 
 ---
 
