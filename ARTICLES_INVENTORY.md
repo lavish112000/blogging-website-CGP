@@ -1,4 +1,6 @@
-﻿# Tech-Knowlogia â€” Articles Inventory
+﻿# Tech-Knowlogia — Articles Inventory
+
+**Last updated:** 2025-12-31
 
 **Project:** Tech-Knowlogia Blogging Platform  
 **Generated:** December 30, 2025  
@@ -7,7 +9,7 @@
 
 ---
 
-## ðŸ“Š Overview Dashboard
+## Overview Dashboard
 
 | Metric | Value |
 |--------|-------|
@@ -20,7 +22,7 @@
 
 ---
 
-## ðŸ“š Articles by Category
+## Articles by Category
 
 ---
 
@@ -550,4 +552,3 @@ public/images/
 ---
 
 *Tech-Knowlogia â€” Delivering professional, research-backed content across technology, lifestyle, design, and business domains.*
-
