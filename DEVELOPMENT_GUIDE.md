@@ -2,6 +2,8 @@
 
 A comprehensive guide to understanding, developing, and maintaining the Tech-Knowlogia blogging platform.
 
+**Last updated:** 2025-12-31
+
 ---
 
 ## 📋 Table of Contents
@@ -23,15 +25,15 @@ A comprehensive guide to understanding, developing, and maintaining the Tech-Kno
 
 ## Project Overview
 
-**Tech-Knowlogia** is a modern, full-featured blogging platform built with Next.js 15+. It delivers premium knowledge for professionals across technology, lifestyle, design, and business domains.
+**Tech-Knowlogia** is a modern, full-featured blogging platform built with Next.js 16 (App Router). It delivers premium knowledge for professionals across technology, lifestyle, design, and business domains.
 
 ### Key Highlights
 
-- **Framework**: Next.js 15+ with App Router
+- **Framework**: Next.js 16 with App Router
 - **Default Theme**: Dark Mode
 - **Features**: Newsletter subscriptions, RSS feeds, SEO optimization, responsive design
 - **Content Format**: MDX (Markdown + JSX)
-- **Deployment**: Optimized for Vercel
+- **Deployment**: Netlify-ready (`@netlify/plugin-nextjs`)
 
 ---
 
@@ -39,7 +41,7 @@ A comprehensive guide to understanding, developing, and maintaining the Tech-Kno
 
 ### Frontend
 
-- **Framework**: Next.js 15+
+- **Framework**: Next.js 16
 - **Styling**: Tailwind CSS 4 with PostCSS
 - **UI Components**: Radix UI + Lucide Icons
 - **Theme Management**: next-themes
@@ -105,15 +107,18 @@ npm install
 Create a `.env.local` file in the project root:
 
 ```env
-# Google Analytics (Optional)
-NEXT_PUBLIC_GA_ID=G-BFS1TSH6FK
+# Optional (only if you enable MongoDB-backed features)
+MONGODB_URI=mongodb+srv://<db_user>:<db_password>@<cluster_host>/<db_name>?retryWrites=true&w=majority
 
-# Google AdSense (Optional)
-NEXT_PUBLIC_ADSENSE_CLIENT_ID=ca-pub-4704600108238951
-
-# API Configuration
-NEXT_PUBLIC_SITE_URL=https://tech-knowlogia.com
+# Optional integrations (placeholders unless you wire them up)
+ONESIGNAL_API_KEY=
+ONESIGNAL_APP_ID=
+RESEND_API_KEY=
 ```
+
+Notes:
+- `.env.local` is ignored by git via `.gitignore` (`.env*`). Keep secrets out of commits.
+- Netlify Identity login (CMS + Admin Dashboard) works reliably on Netlify domains. For local identity testing, use `netlify dev` (Netlify CLI).
 
 ### 4. Run Development Server
 
