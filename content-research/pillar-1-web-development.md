@@ -1,5 +1,8 @@
 # Pillar Article Research Brief: The Future of Web Development
 
+**Last updated:** 2025-12-31  
+**Note:** Internal research brief. Contains no credentials; safe to share.
+
 ## Article Details
 
 - **Category**: Blog (Web Development)

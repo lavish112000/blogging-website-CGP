@@ -1,5 +1,8 @@
 # Pillar Article Research Brief: Digital Marketing Strategies for 2025
 
+**Last updated:** 2025-12-31  
+**Note:** Internal research brief. Contains no credentials; safe to share.
+
 ## Article Details
 
 - **Category**: Business
