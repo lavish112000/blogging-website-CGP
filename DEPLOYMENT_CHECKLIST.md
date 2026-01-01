@@ -4,6 +4,8 @@
 
 **Complete this checklist before going live**
 
+**Last updated:** 2025-12-31
+
 ---
 
 ## 📦 FILES CREATED
@@ -61,6 +63,7 @@
 
 - [x] AuthProvider added to root layout
 - [x] All admin pages use protected layout
+- [x] Header includes Login/Logout controls (Netlify Identity)
 - [x] ViewTracker added to article template
 - [x] Google verification in metadata
 - [x] Google News script in articles
@@ -154,7 +157,8 @@ netlify identity:set-role --email YOUR@EMAIL.com --role admin
 
 ### Test 3: Admin Access ⏳
 
-- [ ] Login as admin (your account)
+- [ ] Login as admin (your account) using the site **Login** button (user icon in the header)
+- [ ] Confirm your Netlify Identity user has `admin` in `app_metadata.roles`
 - [ ] Visit `/admin-dashboard` - Should load successfully
 - [ ] See dashboard with stats
 - [ ] Navigate to all sub-pages (analytics, trending, breaking-news, ai-drafts, settings)
@@ -179,6 +183,14 @@ netlify identity:set-role --email YOUR@EMAIL.com --role admin
 - [ ] Verify article appears in tracking table
 - [ ] View count increments on repeat visits
 - [ ] Refresh button updates data
+
+---
+
+## 🔐 Notes on Identity (Local vs Netlify)
+
+- Netlify Identity endpoints (`/.netlify/identity/*`) are available on Netlify deploy previews/production.
+- If you run locally with `npm run dev`, Identity login may not work unless you proxy those endpoints.
+- For local Identity testing, prefer `netlify dev` (Netlify CLI), or test on a Netlify deploy.
 
 ### Test 6: Breaking News ⏳
 
@@ -312,6 +324,7 @@ netlify identity:set-role --email YOUR@EMAIL.com --role admin
 | **Server Auth** | ⚠️ Needs work | API protection TODO |
 
 **Legend:**
+
 - ✅ Ready = Production ready as-is
 - ⚠️ Ready* = Works but has upgrade path
 - ⏳ Needs work = Must implement before production
