@@ -2,6 +2,8 @@
 
 ## ✅ ALL 5 FEATURES IMPLEMENTED
 
+**Last updated:** 2025-12-31
+
 Your Tech-Knowlogia CMS now has enterprise-level features:
 
 1. ✅ **Role-based permissions** (Admin / Editor)
@@ -74,7 +76,7 @@ Shows exact article rendering in real-time as you type in the CMS editor.
 
 ### 📋 How to Use
 
-1. Open CMS: `https://tech-knowlogia.netlify.app/admin`
+1. Open CMS: `https://<your-site-domain>/admin`
 2. Create or edit any article
 3. Look for **"Preview"** tab in editor
 4. See real-time updates as you type!
@@ -165,7 +167,7 @@ Generates structured article drafts based on a topic prompt.
 **Option 1: API Call (Recommended)**
 
 ```bash
-curl -X POST https://tech-knowlogia.netlify.app/api/ai-draft \
+curl -X POST https://<your-site-domain>/api/ai-draft \
   -H "Content-Type: application/json" \
   -d '{"topic": "Quantum Computing", "category": "technology"}'
 ```
@@ -245,7 +247,7 @@ Sends instant notifications when breaking news articles are published.
 **Manual Trigger:**
 
 ```bash
-curl -X POST https://tech-knowlogia.netlify.app/api/notify \
+curl -X POST https://<your-site-domain>/api/notify \
   -H "Content-Type: application/json" \
   -d '{
     "title": "Breaking: Major Tech Announcement",
@@ -430,12 +432,12 @@ DATABASE_URL=your_database_url_here
 
 ### Future Features
 
-5. **Content Calendar**: Schedule posts in advance
-6. **A/B Testing**: Test headlines automatically
-7. **SEO Score**: Real-time SEO recommendations
-8. **Image Optimizer**: Auto-compress uploads
-9. **Multi-language**: Translation workflow
-10. **Comment Moderation**: Built-in comment system
+1. **Content Calendar**: Schedule posts in advance
+2. **A/B Testing**: Test headlines automatically
+3. **SEO Score**: Real-time SEO recommendations
+4. **Image Optimizer**: Auto-compress uploads
+5. **Multi-language**: Translation workflow
+6. **Comment Moderation**: Built-in comment system
 
 ---
 
