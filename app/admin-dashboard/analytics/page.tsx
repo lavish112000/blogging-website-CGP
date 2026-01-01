@@ -70,8 +70,14 @@ export default function AnalyticsPage() {
       const data = (await response.json()) as Ga4ApiResponse
       if (!response.ok) {
         setGa(data)
-        const reason = 'reason' in data && data.reason ? ` (${data.reason})` : ''
-        setError(`Failed to load GA4 analytics${reason}.`)
+        const serverError = 'error' in data && data.error ? data.error : ''
+        const serverReason = 'reason' in data && data.reason ? data.reason : ''
+
+        const parts = [`HTTP ${response.status}`]
+        if (serverError) parts.push(serverError)
+        if (serverReason) parts.push(serverReason)
+
+        setError(`Failed to load GA4 analytics (${parts.join(' - ')}).`)
         return
       }
 

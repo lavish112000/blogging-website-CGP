@@ -21,7 +21,20 @@ function loadCredentials(): Record<string, unknown> | null {
   if (b64) {
     try {
       const json = Buffer.from(b64, 'base64').toString('utf8')
-      return JSON.parse(json)
+      const parsed = JSON.parse(json) as unknown
+      const record = parsed as Record<string, unknown>
+      const clientEmail = record?.client_email
+      const privateKeyRaw = record?.private_key
+
+      if (typeof clientEmail !== 'string' || clientEmail.length === 0) return null
+      if (typeof privateKeyRaw !== 'string' || privateKeyRaw.length === 0) return null
+
+      const privateKey = privateKeyRaw.replace(/\\n/g, '\n')
+
+      return {
+        client_email: clientEmail,
+        private_key: privateKey,
+      }
     } catch {
       return null
     }

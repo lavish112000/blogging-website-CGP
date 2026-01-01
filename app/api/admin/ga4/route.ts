@@ -29,8 +29,9 @@ export async function GET(req: Request) {
     return NextResponse.json({ configured: true, summary })
   } catch (error) {
     console.error('GA4 summary fetch failed:', error)
+    const message = error instanceof Error ? error.message : String(error)
     return NextResponse.json(
-      { error: 'Failed to fetch GA4 summary' },
+      { error: 'Failed to fetch GA4 summary', reason: message.slice(0, 300) },
       { status: 500 }
     )
   }
