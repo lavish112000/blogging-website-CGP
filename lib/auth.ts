@@ -31,17 +31,13 @@ function getBearerToken(headers: Headers): string | null {
 }
 
 function getSiteBaseUrl(headers: Headers): string | null {
-  const envUrl =
-    process.env.URL ||
-    process.env.DEPLOY_PRIME_URL ||
-    process.env.NETLIFY_SITE_URL
-
-  if (envUrl) return envUrl
-
   const host = headers.get('x-forwarded-host') || headers.get('host')
   if (!host) return null
 
   const proto = headers.get('x-forwarded-proto') || 'https'
+
+  // Prefer the actual request origin to avoid validating against the wrong Netlify site.
+  // (Netlify env vars like URL can point to a different deploy context/domain.)
   return `${proto}://${host}`
 }
 
@@ -129,7 +125,8 @@ export async function checkAdminAuth(headers: Headers): Promise<AuthCheckResult>
 
     // Validate token by calling the Netlify Identity user endpoint.
     // This avoids custom JWT verification logic and ensures the token is valid.
-    const resp = await fetch(`${baseUrl}/.netlify/identity/user`, {
+    const identityUrl = `${baseUrl}/.netlify/identity/user`
+    const resp = await fetch(identityUrl, {
       headers: {
         authorization: `Bearer ${token}`
       },
@@ -137,11 +134,18 @@ export async function checkAdminAuth(headers: Headers): Promise<AuthCheckResult>
     })
 
     if (!resp.ok) {
+      let detail = ''
+      try {
+        const text = await resp.text()
+        if (text) detail = `: ${text.slice(0, 200)}`
+      } catch {
+        // ignore
+      }
       return {
         authorized: false,
         user: null,
         role: 'public',
-        reason: 'Invalid or expired token'
+        reason: `Invalid or expired token (identity ${resp.status} at ${identityUrl})${detail}`
       }
     }
 
