@@ -1,5 +1,7 @@
 # Google News Inclusion Assessment - Tech-Knowlogia
 
+**Last updated:** 2025-12-31
+
 ## ✅ STRENGTHS (What's Already Implemented)
 
 ### 1. ✅ High-Quality Content Structure
@@ -46,7 +48,7 @@
 
 ### 6. ✅ Sitemaps
 
-- **Status:** IMPLEMENTED TODAY
+- **Status:** IMPLEMENTED
 - Main sitemap.xml created with proper priorities
 - Google News sitemap with recent articles (30 days)
 - Both declared in robots.txt
@@ -81,7 +83,7 @@
   - Publish at least 3-5 new articles per week
   - Maintain consistent posting schedule
   - Google News favors regularly updated sources
-  - Use the Decap CMS admin dashboard to schedule posts
+  - Use Decap CMS to publish consistently (publication date can be set in frontmatter)
 
 ### 3. 🟡 Article Freshness
 
