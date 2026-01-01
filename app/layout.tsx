@@ -87,6 +87,7 @@ export default async function RootLayout({
 }>) {
   const requestHeaders = await headers();
   const pathname = requestHeaders.get("x-pathname") ?? "";
+  const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
   const isAdminRoute =
     pathname === "/admin" ||
     pathname.startsWith("/admin/") ||
@@ -142,21 +143,25 @@ export default async function RootLayout({
           }}
         />
         {/* Google Analytics */}
-        <Script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-BFS1TSH6FK"
-          strategy="afterInteractive"
-        />
-        <Script
-          id="google-analytics"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              gtag('js', new Date());
-              gtag('config', 'G-BFS1TSH6FK');
-            `,
-          }}
-        />
+        {gaMeasurementId ? (
+          <>
+            <Script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
+              strategy="afterInteractive"
+            />
+            <Script
+              id="google-analytics"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  gtag('js', new Date());
+                  gtag('config', '${gaMeasurementId}');
+                `,
+              }}
+            />
+          </>
+        ) : null}
         {/* Google AdSense (avoid loading on admin routes) */}
         {!isAdminRoute && (
           <Script
