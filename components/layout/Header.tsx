@@ -2,15 +2,17 @@
 
 import Link from 'next/link'
 import { useState, useEffect, startTransition } from 'react'
-import { Menu, X, Search, Moon, Sun } from 'lucide-react'
+import { Menu, X, Search, Moon, Sun, User, LogOut, LayoutDashboard } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { CATEGORIES } from '@/lib/categories'
+import { useAuth } from '@/components/auth/AuthProvider'
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
   const { theme, setTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const { user, isAdmin, login, logout } = useAuth()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -104,6 +106,36 @@ export function Header() {
               </button>
             )}
 
+            {/* Auth Buttons */}
+            {user ? (
+              <div className="flex items-center space-x-2">
+                {isAdmin && (
+                  <Link
+                    href="/admin-dashboard"
+                    className="p-2 rounded-lg hover:bg-muted transition-colors text-primary"
+                    title="Admin Dashboard"
+                  >
+                    <LayoutDashboard className="w-5 h-5" />
+                  </Link>
+                )}
+                <button
+                  onClick={logout}
+                  className="p-2 rounded-lg hover:bg-muted transition-colors text-red-500"
+                  title="Logout"
+                >
+                  <LogOut className="w-5 h-5" />
+                </button>
+              </div>
+            ) : (
+              <button
+                onClick={login}
+                className="p-2 rounded-lg hover:bg-muted transition-colors"
+                title="Login"
+              >
+                <User className="w-5 h-5" />
+              </button>
+            )}
+
             <Link
               href="/newsletter"
               className="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
@@ -162,6 +194,40 @@ export function Header() {
               >
                 Contact
               </Link>
+
+              {/* Mobile Auth */}
+              {user ? (
+                <>
+                  {isAdmin && (
+                    <Link
+                      href="/admin-dashboard"
+                      className="block px-4 py-2 text-sm font-medium text-primary hover:bg-muted rounded-lg transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Admin Dashboard
+                    </Link>
+                  )}
+                  <button
+                    onClick={() => {
+                      logout()
+                      setIsMenuOpen(false)
+                    }}
+                    className="block w-full text-left px-4 py-2 text-sm font-medium text-red-500 hover:bg-muted rounded-lg transition-colors"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => {
+                    login()
+                    setIsMenuOpen(false)
+                  }}
+                  className="block w-full text-left px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors"
+                >
+                  Login
+                </button>
+              )}
 
               <div className="flex items-center space-x-4 px-4 pt-4 border-t border-gray-200 dark:border-gray-800">
                 <button
