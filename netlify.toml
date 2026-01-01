@@ -1,6 +1,6 @@
 # Netlify configuration for Next.js App Router
 [build]
-  command = "node scripts/generate-auth0-config.mjs && npm run build"
+  command = "npm run build"
   publish = ".next"
 
 [dev]
