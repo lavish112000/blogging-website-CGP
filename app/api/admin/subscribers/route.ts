@@ -1,0 +1,96 @@
+import { NextResponse } from 'next/server'
+import connectDB from '@/lib/mongodb'
+import Subscriber from '@/models/Subscriber'
+import { checkAdminAuth } from '@/lib/auth'
+
+export async function GET(req: Request) {
+  const auth = await checkAdminAuth(new Headers(req.headers))
+
+  if (!auth.authorized) {
+    return NextResponse.json(
+      { error: 'Unauthorized', reason: auth.reason || 'Not authorized' },
+      { status: 401 }
+    )
+  }
+
+  try {
+    const { searchParams } = new URL(req.url)
+    const status = searchParams.get('status')
+    const format = searchParams.get('format')
+
+    await connectDB()
+
+    const filter: { status?: string } = {}
+    if (status && ['active', 'pending', 'unsubscribed'].includes(status)) {
+      filter.status = status
+    }
+
+    const subscribers = await Subscriber.find(filter).sort({ createdAt: -1 }).lean()
+
+    const counts = {
+      total: await Subscriber.countDocuments(),
+      active: await Subscriber.countDocuments({ status: 'active' }),
+      pending: await Subscriber.countDocuments({ status: 'pending' }),
+      unsubscribed: await Subscriber.countDocuments({ status: 'unsubscribed' }),
+    }
+
+    if (format === 'csv') {
+      const headers = ['Email', 'Status', 'Subscribed At', 'Confirmed At', 'Unsubscribed At']
+      const rows = subscribers.map((s) => [
+        s.email,
+        s.status,
+        s.createdAt ? new Date(s.createdAt).toISOString() : '',
+        s.confirmedAt ? new Date(s.confirmedAt).toISOString() : '',
+        s.unsubscribedAt ? new Date(s.unsubscribedAt).toISOString() : '',
+      ])
+
+      const csv = [headers.join(','), ...rows.map((r) => r.join(','))].join('\n')
+
+      return new Response(csv, {
+        status: 200,
+        headers: {
+          'Content-Type': 'text/csv',
+          'Content-Disposition': `attachment; filename="subscribers-${new Date().toISOString().split('T')[0]}.csv"`,
+        },
+      })
+    }
+
+    return NextResponse.json({ subscribers, counts })
+  } catch (error) {
+    console.error('Admin subscribers fetch failed:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
+}
+
+export async function DELETE(req: Request) {
+  const auth = await checkAdminAuth(new Headers(req.headers))
+
+  if (!auth.authorized) {
+    return NextResponse.json(
+      { error: 'Unauthorized', reason: auth.reason || 'Not authorized' },
+      { status: 401 }
+    )
+  }
+
+  try {
+    const { searchParams } = new URL(req.url)
+    const id = searchParams.get('id')
+
+    if (!id) {
+      return NextResponse.json({ error: 'Missing subscriber id' }, { status: 400 })
+    }
+
+    await connectDB()
+
+    const result = await Subscriber.findByIdAndDelete(id)
+
+    if (!result) {
+      return NextResponse.json({ error: 'Subscriber not found' }, { status: 404 })
+    }
+
+    return NextResponse.json({ message: 'Subscriber deleted' })
+  } catch (error) {
+    console.error('Admin subscriber delete failed:', error)
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
+  }
+}
