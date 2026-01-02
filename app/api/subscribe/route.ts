@@ -7,6 +7,22 @@ import { getRequestBaseUrl } from '@/lib/siteUrl'
 
 export async function POST(request: Request) {
   try {
+    // Check environment variables first
+    if (!process.env.RESEND_API_KEY) {
+      console.error('RESEND_API_KEY is not configured')
+      return NextResponse.json({ error: 'Email service not configured. Please contact support.' }, { status: 500 })
+    }
+
+    if (!process.env.RESEND_FROM_EMAIL) {
+      console.error('RESEND_FROM_EMAIL is not configured')
+      return NextResponse.json({ error: 'Email service not configured. Please contact support.' }, { status: 500 })
+    }
+
+    if (!process.env.SUBSCRIBER_TOKEN_SECRET) {
+      console.error('SUBSCRIBER_TOKEN_SECRET is not configured')
+      return NextResponse.json({ error: 'Email service not configured. Please contact support.' }, { status: 500 })
+    }
+
     const { email } = await request.json()
 
     if (!email || typeof email !== 'string' || !email.includes('@')) {
@@ -67,6 +83,25 @@ export async function POST(request: Request) {
     )
   } catch (error) {
     console.error('Subscription error:', error)
+    
+    // Provide more specific error messages
+    if (error instanceof Error) {
+      if (error.message.includes('RESEND_API_KEY')) {
+        return NextResponse.json({ error: 'Email service not configured' }, { status: 500 })
+      }
+      if (error.message.includes('RESEND_FROM_EMAIL')) {
+        return NextResponse.json({ error: 'Email service not configured' }, { status: 500 })
+      }
+      if (error.message.includes('Resend API failed')) {
+        console.error('Resend API error:', error.message)
+        return NextResponse.json({ error: 'Failed to send confirmation email. Please try again.' }, { status: 500 })
+      }
+      if (error.message.includes('MongoDB') || error.message.includes('mongoose')) {
+        console.error('Database error:', error.message)
+        return NextResponse.json({ error: 'Database error. Please try again.' }, { status: 500 })
+      }
+    }
+    
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
