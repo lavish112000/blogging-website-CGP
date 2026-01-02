@@ -24,11 +24,11 @@ export function NewsletterForm() {
       if (!res.ok) throw new Error(data.error || 'Something went wrong')
 
       setStatus('success')
-      setMessage('Thanks for subscribing!')
+      setMessage('Check your email to confirm your subscription!')
       setEmail('')
     } catch (error) {
       setStatus('error')
-      setMessage('Failed to subscribe. Please try again.')
+      setMessage(error instanceof Error ? error.message : 'Failed to subscribe. Please try again.')
     }
   }
 
