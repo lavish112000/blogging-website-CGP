@@ -29,7 +29,7 @@ export const CATEGORIES: CategoryInfo[] = [
     name: 'Technology',
     slug: 'technology',
     description: 'Stay ahead with insights on AI, cloud computing, cybersecurity, and emerging tech trends.',
-    color: 'text-emerald-600',
+    color: 'text-emerald-700',
     gradient: 'from-emerald-600 to-teal-600',
     icon: 'Cpu'
   },

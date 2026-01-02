@@ -97,6 +97,16 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* DNS Prefetch for external resources */}
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+        <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
+        <link rel="dns-prefetch" href="https://identity.netlify.com" />
+        
+        {/* Preconnect to critical origins */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.google-analytics.com" crossOrigin="anonymous" />
+        
         {/* Google AdSense Meta Tag */}
         <meta name="google-adsense-account" content="ca-pub-4704600108238951" />
       </head>
@@ -148,11 +158,11 @@ export default async function RootLayout({
             <Script
               async
               src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
-              strategy="afterInteractive"
+              strategy="lazyOnload"
             />
             <Script
               id="google-analytics"
-              strategy="afterInteractive"
+              strategy="lazyOnload"
               dangerouslySetInnerHTML={{
                 __html: `
                   gtag('js', new Date());
@@ -168,14 +178,14 @@ export default async function RootLayout({
             async
             src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4704600108238951"
             crossOrigin="anonymous"
-            strategy="afterInteractive"
+            strategy="lazyOnload"
           />
         )}
 
         {/* Netlify Identity (needed for password recovery links) */}
         <Script
           src="https://identity.netlify.com/v1/netlify-identity-widget.js"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
         <AuthProvider>
           <ThemeProvider
