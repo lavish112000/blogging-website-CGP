@@ -51,6 +51,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
   const navItems = [
     { href: '/admin-dashboard', icon: LayoutDashboard, label: 'Dashboard' },
     { href: '/admin-dashboard/analytics', icon: TrendingUp, label: 'Analytics' },
+    { href: '/admin-dashboard/subscribers', icon: TrendingUp, label: 'Subscribers' },
     { href: '/admin-dashboard/trending', icon: TrendingUp, label: 'Trending' },
     { href: '/admin-dashboard/breaking-news', icon: AlertCircle, label: 'Breaking News' },
     { href: '/admin-dashboard/ai-drafts', icon: Sparkles, label: 'AI Drafts' },
