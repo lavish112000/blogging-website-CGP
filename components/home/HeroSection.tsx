@@ -95,15 +95,15 @@ export function HeroSection() {
             className="grid grid-cols-3 gap-8 mt-16 max-w-2xl mx-auto"
           >
             <div>
-              <div className="text-3xl md:text-4xl font-bold gradient-text-primary">30+</div>
-              <div className="text-sm text-muted-foreground mt-1">Expert Articles</div>
+              <div className="text-3xl md:text-4xl font-bold gradient-text-primary"> 10 </div>
+              <div className="text-sm text-muted-foreground mt-1">Articles Every Week</div>
             </div>
             <div>
               <div className="text-3xl md:text-4xl font-bold gradient-text-primary">5</div>
               <div className="text-sm text-muted-foreground mt-1">Categories</div>
             </div>
             <div>
-              <div className="text-3xl md:text-4xl font-bold gradient-text-primary">2.5k+</div>
+              <div className="text-3xl md:text-4xl font-bold gradient-text-primary">2.0k+</div>
               <div className="text-sm text-muted-foreground mt-1">Avg Words</div>
             </div>
           </motion.div>

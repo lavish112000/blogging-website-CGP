@@ -67,16 +67,19 @@ A comprehensive guide to understanding, developing, and maintaining the Tech-Kno
 Before setting up the project, ensure you have:
 
 1. **Node.js** (v18 or higher)
+
    ```bash
    node --version  # Check installed version
    ```
 
 2. **npm** (v9 or higher)
+
    ```bash
    npm --version
    ```
 
 3. **Git** (for version control)
+
    ```bash
    git --version
    ```
@@ -117,6 +120,7 @@ RESEND_API_KEY=
 ```
 
 Notes:
+
 - `.env.local` is ignored by git via `.gitignore` (`.env*`). Keep secrets out of commits.
 - Netlify Identity login (CMS + Admin Dashboard) works reliably on Netlify domains. For local identity testing, use `netlify dev` (Netlify CLI).
 
@@ -233,6 +237,7 @@ blogging-website/
 - **Format**: Markdown with embedded JSX
 - **Processing**: gray-matter extracts frontmatter; markdown-it renders HTML
 - **Frontmatter Fields**:
+
    ```yaml
    title: Article Title
    description: Brief description
@@ -314,18 +319,21 @@ Using Decap CMS at `/admin`:
    - Reference in frontmatter: `image: /images/article-name.jpg`
 
 3. **Test Locally**
+
    ```bash
    npm run dev
    # Visit http://localhost:3000/[category]/[slug]
    ```
 
 4. **Commit Changes**
+
    ```bash
    git add content/[category]/[slug].mdx
    git commit -m "content: add article title"
    ```
 
 5. **Deploy**
+
    ```bash
    git push origin main
    # Automatically deploys via Vercel
@@ -334,6 +342,7 @@ Using Decap CMS at `/admin`:
 ### Development Workflow
 
 1. **Create Feature Branch**
+
    ```bash
    git checkout -b feature/feature-name
    ```
@@ -343,12 +352,14 @@ Using Decap CMS at `/admin`:
    - Test with `npm run dev`
 
 3. **Build & Test**
+
    ```bash
    npm run build
    npm run lint  # If configured
    ```
 
 4. **Commit Changes**
+
    ```bash
    git add .
    git commit -m "type: description"
@@ -372,6 +383,7 @@ Using Decap CMS at `/admin`:
 - `content:` - Blog article additions
 
 Example:
+
 ```bash
 git commit -m "feat: add search functionality to blog posts"
 ```
@@ -385,6 +397,7 @@ git commit -m "feat: add search functionality to blog posts"
 **Endpoint**: `POST /api/subscribe`
 
 **Request Body**:
+
 ```json
 {
   "email": "user@example.com"
@@ -392,6 +405,7 @@ git commit -m "feat: add search functionality to blog posts"
 ```
 
 **Response (Success)**:
+
 ```json
 {
   "success": true,
@@ -400,6 +414,7 @@ git commit -m "feat: add search functionality to blog posts"
 ```
 
 **Response (Error)**:
+
 ```json
 {
   "success": false,
@@ -408,6 +423,7 @@ git commit -m "feat: add search functionality to blog posts"
 ```
 
 **Status Codes**:
+
 - `200`: Subscription successful
 - `400`: Invalid email or missing fields
 - `500`: Server error
@@ -441,6 +457,7 @@ git commit -m "feat: add search functionality to blog posts"
 ### Data Structure
 
 **Post Object**:
+
 ```typescript
 {
   slug: string
@@ -465,6 +482,7 @@ git commit -m "feat: add search functionality to blog posts"
 ### Design System
 
 **Color Palette** (Tailwind CSS):
+
 - Primary: Blue gradients
 - Background: Light/Dark variants
 - Text: Gray scales for contrast
@@ -472,6 +490,7 @@ git commit -m "feat: add search functionality to blog posts"
 ### Customization
 
 1. **Edit Colors**: `tailwind.config.ts`
+
    ```typescript
    colors: {
      primary: '#...',
@@ -480,11 +499,13 @@ git commit -m "feat: add search functionality to blog posts"
    ```
 
 2. **Edit Fonts**: `app/layout.tsx`
+
    ```typescript
    import { FontName } from 'next/font/google'
    ```
 
 3. **Edit Spacing**: `tailwind.config.ts`
+
    ```typescript
    spacing: { ... }
    ```
@@ -543,6 +564,7 @@ npm start
 **Problem**: `useState` used in Server Component
 
 **Solution**:
+
 ```typescript
 // Move state-dependent code to Client Component
 'use client'
@@ -556,6 +578,7 @@ export function MyComponent() {
 ```
 
 Import this component in Server Component:
+
 ```typescript
 import { MyComponent } from '@/components/MyComponent'
 
@@ -569,6 +592,7 @@ export default function Page() {
 **Problem**: Article not appearing on category page
 
 **Solution**:
+
 - Verify file location: `content/[category]/[slug].mdx`
 - Check frontmatter syntax (YAML format)
 - Ensure category matches folder name
@@ -578,6 +602,7 @@ export default function Page() {
 **Problem**: Dark mode resets on page reload
 
 **Solution**:
+
 - Clear browser cache/cookies
 - Check that `next-themes` is properly wrapped
 - Verify `suppressHydrationWarning` in `<html>` tag
@@ -587,6 +612,7 @@ export default function Page() {
 **Problem**: Slow page load
 
 **Solution**:
+
 - Run `npm run build` to check for errors
 - Use Chrome DevTools to identify bottlenecks
 - Check image sizes (should be optimized)

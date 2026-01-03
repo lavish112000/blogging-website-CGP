@@ -43,10 +43,12 @@ Google Analytics 4 (GA4) is Google's free analytics platform that tracks user be
 ## What Does It Do?
 
 ### A. On Your Website (Automatic)
+
 - Tracks page views, sessions, user behavior, traffic sources, and more.
 - Sends data to Google's servers (privacy-compliant if configured correctly).
 
 ### B. In Your Admin Dashboard (What You Build)
+
 - Fetches real metrics from Google Analytics via the Google Analytics Data API.
 - Displays stats like:
   - Total page views (current month/week/day)
@@ -76,6 +78,7 @@ Tech-Knowlogia
 ### Step 1: Set Up Google Analytics 4
 
 **1.1 Create a Google Analytics Property**
+
 - Go to [Google Analytics](https://analytics.google.com/).
 - Sign in with your Google account.
 - Click **Admin** (bottom left).
@@ -111,6 +114,7 @@ This is **already partially done** in your `app/layout.tsx`:
 ```
 
 **What this does:**
+
 - Loads the Google Analytics script on every page.
 - Tracks page views, sessions, and user behavior automatically.
 - Sends data to Google's servers for analysis.
@@ -122,16 +126,19 @@ This is **already partially done** in your `app/layout.tsx`:
 **Why?** To fetch analytics data from Google Analytics via the API, you need credentials (service account).
 
 **2.1 Create a Google Cloud Project**
+
 - Go to [Google Cloud Console](https://console.cloud.google.com/).
 - Create a **new project**: `Tech-Knowlogia Analytics`.
 - Wait for it to be created (1-2 minutes).
 
 **2.2 Enable the Analytics Data API**
+
 - In your project, go to **APIs & Services > Library**.
 - Search for `Google Analytics Data API`.
 - Click on it and select **Enable**.
 
 **2.3 Create a Service Account**
+
 - Go to **APIs & Services > Credentials**.
 - Click **Create Credentials > Service Account**.
 - Fill in:
@@ -141,6 +148,7 @@ This is **already partially done** in your `app/layout.tsx`:
 - Skip optional steps, click **Done**.
 
 **2.4 Create a Key**
+
 - In the **Service Accounts** list, click on the account you just created.
 - Go to the **Keys** tab.
 - Click **Add Key > Create new key**.
@@ -148,6 +156,7 @@ This is **already partially done** in your `app/layout.tsx`:
 - A JSON file will download—**keep this file safe** (it contains your credentials).
 
 **2.5 Grant the Service Account Access to Google Analytics**
+
 - Go to [Google Analytics](https://analytics.google.com/).
 - Click **Admin > Account Access Management**.
 - Click **+ Invite users**.
@@ -160,6 +169,7 @@ This is **already partially done** in your `app/layout.tsx`:
 ### Step 3: Add Google Cloud Credentials to Netlify
 
 **3.1 Store Credentials Securely**
+
 - Do **not** commit the JSON file to git.
 - In Netlify Dashboard → **Site Settings > Environment Variables**.
 - Add a new variable:
@@ -167,6 +177,7 @@ This is **already partially done** in your `app/layout.tsx`:
   - **Value:** Paste the entire contents of the JSON file (or convert to base64 for easier pasting).
 
 **3.2 Store Your GA4 Property ID**
+
 - Go back to Google Analytics → **Admin > Property Settings**.
 - Copy your **Property ID** (looks like `1234567890`).
 - Add to Netlify environment variables:
@@ -266,6 +277,7 @@ export async function GET(request: NextRequest) {
 ```
 
 **What this does:**
+
 - Connects to Google Analytics using your service account credentials.
 - Fetches the top 10 articles by page views from the last 30 days.
 - Returns JSON data with view counts, user counts, bounce rates, etc.
@@ -373,6 +385,7 @@ export default function AdminDashboardPage() {
 ```
 
 **What this does:**
+
 - Fetches real analytics data from your `/api/analytics` endpoint.
 - Displays total views, total users, and top articles.
 - Refreshes every 5 minutes for near-real-time updates.
@@ -422,17 +435,20 @@ A homemade email subscriber system built with your existing tech stack (Next.js 
 ## What Does It Do?
 
 ### A. Frontend (What Subscribers See)
+
 - A simple newsletter signup form on your website.
 - Confirmation email sent to verify the subscriber's email (double opt-in).
 - Unsubscribe link in emails (legal requirement).
 
 ### B. Backend (Your API)
+
 - Stores subscriber data in MongoDB (email, name, date subscribed, status).
 - Validates email format and prevents duplicates.
 - Sends confirmation emails via Resend or similar.
 - Tracks subscription status (active, unsubscribed, bounced).
 
 ### C. Admin Dashboard
+
 - View all subscribers in a sortable/searchable table.
 - Export subscribers as CSV.
 - Delete/unsubscribe users.
@@ -524,6 +540,7 @@ export const Subscriber =
 ```
 
 **What this does:**
+
 - Defines the structure of a subscriber in MongoDB.
 - Includes email, name, subscription status, confirmation token, and timestamps.
 - Ensures emails are unique and validated.
@@ -535,18 +552,21 @@ export const Subscriber =
 **Why Resend?** Free tier: 3,000 emails/month, good deliverability, easy API.
 
 **2.1 Create a Resend Account**
+
 - Go to [Resend.com](https://resend.com/).
 - Sign up with your email.
 - Verify your email.
 - Go to **API Keys** and copy your API key.
 
 **2.2 Add Resend to Netlify Environment Variables**
+
 - Netlify Dashboard → **Site Settings > Environment Variables**.
 - Add:
   - **Key:** `RESEND_API_KEY`
   - **Value:** Your Resend API key.
 
 **2.3 Install Resend Package**
+
 ```bash
 npm install resend
 ```
@@ -631,6 +651,7 @@ export async function sendUnsubscribeConfirmation(email: string) {
 ```
 
 **What this does:**
+
 - Provides helper functions to send different types of emails via Resend.
 - Sends confirmation, welcome, and unsubscribe emails.
 
@@ -707,6 +728,7 @@ export async function POST(request: NextRequest) {
 ```
 
 **What this does:**
+
 - Accepts email and name from the signup form.
 - Validates the email format.
 - Creates a `confirmationToken` (random string).
@@ -776,6 +798,7 @@ export async function GET(request: NextRequest) {
 ```
 
 **What this does:**
+
 - Handles the confirmation link clicked by the subscriber.
 - Validates the token and email.
 - Marks the subscriber as "active".
@@ -825,6 +848,7 @@ export async function GET(request: NextRequest) {
 ```
 
 **What this does:**
+
 - Returns all active subscribers.
 - Includes stats (total, active, pending).
 - Used by admin dashboard to display subscriber list.
@@ -882,6 +906,7 @@ export async function DELETE(
 ```
 
 **What this does:**
+
 - Marks a subscriber as "unsubscribed".
 - Sends a confirmation email.
 - Used by admin dashboard to remove users.
@@ -976,6 +1001,7 @@ export function SubscribeForm() {
 ```
 
 **What this does:**
+
 - Provides a signup form component.
 - Validates email and name.
 - Calls `/api/subscribe` endpoint.
@@ -1182,6 +1208,7 @@ export default function SubscribersPage() {
 ```
 
 **What this does:**
+
 - Displays all email subscribers in a table.
 - Shows subscriber stats (total, active, pending).
 - Allows searching, filtering, and deleting subscribers.
@@ -1265,23 +1292,27 @@ export default function NewsletterSection() {
 ## Implementation Roadmap
 
 ### Phase 1: Immediate (This Week)
+
 - [ ] Implement Google Analytics integration (Option 1)
 - [ ] Verify GA4 data flows to your admin dashboard
 - [ ] Test with real traffic
 
 ### Phase 2: Follow-Up (Next Week)
+
 - [ ] Set up Resend account and API key
 - [ ] Implement custom email subscriber system (Option 2)
 - [ ] Add subscribe form to your website
 - [ ] Test end-to-end: subscribe → confirm → admin view
 
 ### Phase 3: Polish (Week After)
+
 - [ ] Add CSV export for subscribers
 - [ ] Add email campaign scheduler (optional)
 - [ ] Set up automated list cleanup (remove inactive emails)
 - [ ] Monitor email deliverability
 
 ### Phase 4: Advanced (Later)
+
 - [ ] Integrate Analytics + Email (send campaigns to high-engagement subscribers)
 - [ ] Add subscriber segmentation (by article category, frequency, etc.)
 - [ ] Build email campaign builder UI
@@ -1296,6 +1327,7 @@ A: Yes! GA4 tells you who visits and what they read. Custom email system lets yo
 
 **Q: Do I need to worry about GDPR?**
 A: Yes. Ensure you have:
+
 - Clear privacy policy
 - Consent before subscribing (checkbox)
 - Easy unsubscribe in every email
