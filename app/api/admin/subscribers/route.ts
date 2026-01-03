@@ -58,6 +58,49 @@ export async function GET(req: Request) {
     return NextResponse.json({ subscribers, counts })
   } catch (error) {
     console.error('Admin subscribers fetch failed:', error)
+
+    const message = error instanceof Error ? error.message : ''
+    if (message.includes('Missing MONGODB_URI')) {
+      return NextResponse.json(
+        {
+          error: 'Missing MONGODB_URI',
+          hint: 'Set MONGODB_URI in your environment (local: .env.local, production: Netlify Environment variables).',
+        },
+        { status: 500 }
+      )
+    }
+
+    // Common Atlas/URI issues — keep this safe (no secrets)
+    if (/Authentication failed|bad auth|auth error/i.test(message)) {
+      return NextResponse.json(
+        {
+          error: 'MongoDB authentication failed',
+          hint: 'Check Atlas DB user/password. If your password has special characters like @ or #, URL-encode them (%40, %23).',
+        },
+        { status: 500 }
+      )
+    }
+
+    if (/ENOTFOUND|querySrv ENOTFOUND|getaddrinfo ENOTFOUND/i.test(message)) {
+      return NextResponse.json(
+        {
+          error: 'MongoDB host not found',
+          hint: 'Double-check the cluster host in your MONGODB_URI (copy it from Atlas “Connect → Drivers”).',
+        },
+        { status: 500 }
+      )
+    }
+
+    if (/IP.*not allowed|not authorized on|ECONNREFUSED|ETIMEDOUT/i.test(message)) {
+      return NextResponse.json(
+        {
+          error: 'MongoDB connection blocked',
+          hint: 'In Atlas Network Access, allow your current IP (or temporarily allow 0.0.0.0/0 for testing).',
+        },
+        { status: 500 }
+      )
+    }
+
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
@@ -91,6 +134,48 @@ export async function DELETE(req: Request) {
     return NextResponse.json({ message: 'Subscriber deleted' })
   } catch (error) {
     console.error('Admin subscriber delete failed:', error)
+
+    const message = error instanceof Error ? error.message : ''
+    if (message.includes('Missing MONGODB_URI')) {
+      return NextResponse.json(
+        {
+          error: 'Missing MONGODB_URI',
+          hint: 'Set MONGODB_URI in your environment (local: .env.local, production: Netlify Environment variables).',
+        },
+        { status: 500 }
+      )
+    }
+
+    if (/Authentication failed|bad auth|auth error/i.test(message)) {
+      return NextResponse.json(
+        {
+          error: 'MongoDB authentication failed',
+          hint: 'Check Atlas DB user/password. If your password has special characters like @ or #, URL-encode them (%40, %23).',
+        },
+        { status: 500 }
+      )
+    }
+
+    if (/ENOTFOUND|querySrv ENOTFOUND|getaddrinfo ENOTFOUND/i.test(message)) {
+      return NextResponse.json(
+        {
+          error: 'MongoDB host not found',
+          hint: 'Double-check the cluster host in your MONGODB_URI (copy it from Atlas “Connect → Drivers”).',
+        },
+        { status: 500 }
+      )
+    }
+
+    if (/IP.*not allowed|not authorized on|ECONNREFUSED|ETIMEDOUT/i.test(message)) {
+      return NextResponse.json(
+        {
+          error: 'MongoDB connection blocked',
+          hint: 'In Atlas Network Access, allow your current IP (or temporarily allow 0.0.0.0/0 for testing).',
+        },
+        { status: 500 }
+      )
+    }
+
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
   }
 }
