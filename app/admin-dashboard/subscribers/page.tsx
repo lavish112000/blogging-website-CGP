@@ -63,12 +63,20 @@ export default function SubscribersPage() {
         headers: token ? { authorization: `Bearer ${token}` } : undefined,
       })
 
-      if (!response.ok) {
-        const data = await response.json()
-        throw new Error(data.error || 'Failed to load subscribers')
+      // Be resilient to non-JSON error responses (e.g., platform error pages)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let data: any = null
+      try {
+        data = await response.json()
+      } catch {
+        data = null
       }
 
-      const data = await response.json()
+      if (!response.ok) {
+        const hint = typeof data?.hint === 'string' && data.hint.length > 0 ? ` (${data.hint})` : ''
+        throw new Error((data?.error || 'Failed to load subscribers') + hint)
+      }
+
       setSubscribers(data.subscribers || [])
       setCounts(data.counts || { total: 0, active: 0, pending: 0, unsubscribed: 0 })
     } catch (err) {
